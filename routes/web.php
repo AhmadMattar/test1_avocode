@@ -26,11 +26,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::delete('/delete', [CountryController::class, 'destroy'])->name('destroy');
         Route::get('/data', [CountryController::class, 'getCountries'])->name('data');
     });
-});
 
-
-Route::group(['prefix' => LaravelLocalization::setLocale()], function()
-{
     Route::prefix('cities')->name('cities.')->group(function(){
         Route::get('/', [CityController::class, 'index'])->name('index');
         Route::post('', [CityController::class, 'store'])->name('store');
@@ -38,12 +34,20 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::delete('/delete', [CityController::class, 'destroy'])->name('destroy');
         Route::get('/data', [CityController::class, 'getCities'])->name('data');
     });
+    Route::prefix('users')->name('users.')->group(function(){
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::post('', [UserController::class, 'store'])->name('store');
+        Route::put('/update', [UserController::class, 'update'])->name('update');
+        Route::delete('/delete', [UserController::class, 'destroy'])->name('destroy');
+        Route::get('/data', [UserController::class, 'getUsers'])->name('data');
+
+        Route::get('/cities/get-cities', [UserController::class, 'get_cities'])->name('get_cities');
+    });
 });
 
-// Route::resource('cities', CityController::class);
 
-Route::get('users', [UserController::class, 'index'])->name('users.index');
-Route::get('users-data', [UserController::class, 'getUsers'])->name('users.data');
+
+
 
 Route::get('/', function () {
     return view('layouts.master');

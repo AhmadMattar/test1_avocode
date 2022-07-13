@@ -36,6 +36,7 @@ class CountryController extends Controller
                             type="button"
                             data-id="'.$row->id.'"
                             data-code="'.$row->code.'"
+                            data-status="'.$row->status.'"
                             data-cover="'.$row->cover.'" ';
 
             foreach(config('app.langauges') as $key => $value ){
@@ -69,15 +70,16 @@ class CountryController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'code'      => 'required|numeric',
+            'code'      => 'required|numeric|unique:countries',
             'cover'     => 'required',
         ];
         foreach (config('app.langauges') as $key => $locale) {
-            $rules['name_' . $key] = 'required|string|max:255';
+            $rules['name_' . $key] = 'required|string|max:255|unique:country_translations,name';
         }
         $request->validate($rules);
 
         $data = $request->only('code');
+        $data['status'] = $request->status;
 
         foreach (config('app.langauges') as $key => $locale) {
             $data[$key] = ['name' => $request->get('name_' . $key)];
@@ -129,7 +131,7 @@ class CountryController extends Controller
     {
         $country = Country::find($request->id);
         $rules = [
-            'code'      => 'required|numeric',
+            'code'      => 'required|numeric|unique:countries,code,'.$request->id,
             'cover'     => 'nullable',
         ];
         foreach (config('app.langauges') as $key => $locale) {
@@ -142,7 +144,7 @@ class CountryController extends Controller
         }
 
         $data['code'] = $request->code;
-
+        $data['status'] = $request->status;
 
         if($request->file('cover'))
         {

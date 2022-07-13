@@ -116,17 +116,21 @@
     <script>
         $(document).on('click', '#editBtn', function(event) {
             var data = $(this).data();
+            console.log(data);
             var country_id = $(this).data("id");
             var name_en = $(this).data("name_en");
             var name_ar = $(this).data("name_ar");
             var code = $(this).data("code");
+            var status = $(this).data("status");
+            var cover = $(this).data("cover");
 
             $('#editModal').modal('show');
             $('#country_id').attr("value", country_id);
             $('#name_en').attr("value", name_en);
             $('#name_ar').attr("value", name_ar);
             $('#code').attr("value", code);
-            var cover = $(this).data("cover");
+            $('#status').val($(this).data("status")).trigger('change');
+
             $('#country-cover').attr("src", cover);
         });
 
@@ -143,7 +147,6 @@
 
                 success: function(data, status) {
                     $("#datatable").html(data);
-                    $("#addCountry")[0].reset();
                     $("#editModal").modal('hide');
                     toastr.success('✅ تم التعديل بنجاح');
                     $('#dataTable').DataTable().draw();

@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">إضافة دولة</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{{__('general.Add_country')}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -18,14 +18,21 @@
                         </div>
                     @endforeach
                     <div class="form-group">
-                        <label for="code">الرمز</label>
+                        <label for="code">{{__('general.code')}}</label>
                         <input type="number" name="code" class="form-control"
                             value="{{ old('code') }}">
                         <span class="text-danger error-text" id="code_error"></span>
                     </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select name="status" class="form-control">
+                            <option value="1" {{old('status') == 1 ? 'selected' : null}}>Active</option>
+                            <option value="0" {{old('status') == 0 ? 'selected' : null}}>Inactive</option>
+                        </select>
+                    </div>
                     <div class="row pt-4">
                         <div class="col-12">
-                            <label for="cover">الصورة</label>
+                            <label for="cover">{{__('general.photo')}}</label>
                             <br>
                             <div class="file-loading">
                                 <input type="file" name="cover" id="countryImage" class="file-input-overview">
@@ -34,7 +41,7 @@
                         </div>
                     </div>
                     <div class="form-group pt-4">
-                        <button type="submit" name="submit" class="btn btn-primary">أضف الدولة</button>
+                        <button type="submit" name="submit" class="btn btn-primary">{{__('general.Add')}}</button>
                     </div>
                 </form>
             </div>

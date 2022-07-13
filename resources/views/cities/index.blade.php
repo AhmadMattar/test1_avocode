@@ -1,11 +1,11 @@
 @extends('layouts.master')
 @section('content')
     <div class="mt-10">
-        <a class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <a class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addCityModal" data-countries="{{$countries}}">
             {{ __('general.Add') }}
         </a>
-        @include('countries.create')
-        @include('countries.edit')
+        @include('cities.create')
+        @include('cities.edit')
     </div>
     <hr>
     <div class="table-responsive">
@@ -14,8 +14,7 @@
                 <tr>
                     <th>#</th>
                     <th>{{ __('general.name') }}</th>
-                    <th>{{ __('general.code') }}</th>
-                    <th>{{ __('general.photo') }}</th>
+                    <th>Country</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -33,7 +32,7 @@
                 serverSide: true,
                 searching: true,
                 ajax: {
-                    url: '{{ route('countries.data') }}',
+                    url: '{{ route('cities.data') }}',
                 },
                 columns: [{
                         data: 'id',
@@ -46,12 +45,8 @@
                         searchable: true,
                     },
                     {
-                        data: 'code',
-                        name: 'code',
-                    },
-                    {
-                        data: 'cover',
-                        name: 'cover',
+                        data: 'country_id',
+                        name: 'country_name',
                     },
                     {
                         data: 'action',
@@ -64,43 +59,28 @@
         });
     </script>
 
-    {{-- file input --}}
-    <script>
-        $(function() {
-            $("#countryImage").fileinput({
-                theme: "fas",
-                maxFileCount: 1,
-                allowedFileTypes: ['image'],
-                showCancel: true,
-                showRemove: false,
-                showUpload: false,
-                overwriteInitial: false
-            });
-        });
-    </script>
-
     {{-- store new country using ajax --}}
     <script>
-        $('#addCountry').submit(function(e) {
+        $('#addCity').submit(function(e) {
             e.preventDefault();
-            $('.text-danger').addClass('d-none');
             $.ajax({
                 method: "POST",
-                url: "{{ route('countries.store') }}",
+                url: "{{ route('cities.store') }}",
                 data: new FormData(this),
                 contentType: false,
                 processData: false,
 
                 success: function(data, status) {
                     $("#datatable").html(data);
-                    $("#addCountry")[0].reset();
-                    $("#exampleModal").modal('hide');
+                    $("#addCity")[0].reset();
+                    $("#addCityModal").modal('hide');
                     toastr.success('✅ تمت الإضافة بنجاح');
                     $('#dataTable').DataTable().draw();
                 },
                 error: function(data) {
                     var errors = data.responseJSON;
                     if ($.isEmptyObject(errors) == false) {
+                        $('.text-danger').addClass('d-none');
                         $.each(errors.errors, function(key, value) {
                             var errorId = '#' + key + '_error';
                             $(errorId).removeClass('d-none');
@@ -116,25 +96,28 @@
     <script>
         $(document).on('click', '#editBtn', function(event) {
             var data = $(this).data();
-            var country_id = $(this).data("id");
+            console.log(data);
+
+            var city_id = $(this).data("id");
+            var country_id = $(this).data("country_id");
             var name_en = $(this).data("name_en");
             var name_ar = $(this).data("name_ar");
-            var code = $(this).data("code");
 
             $('#editModal').modal('show');
-            $('#country_id').attr("value", country_id);
+
+            $("#city_id").attr("value", city_id);
+            $('#country_name').attr("value", $(this).data("country_name"));
+            $('#edit_country_id').val($(this).data("country_id")).trigger('change');
+            $('#status').val($(this).data("status")).trigger('change');
             $('#name_en').attr("value", name_en);
             $('#name_ar').attr("value", name_ar);
-            $('#code').attr("value", code);
-            var cover = $(this).data("cover");
-            $('#country-cover').attr("src", cover);
         });
 
-        $('#editCountry').submit(function(e) {
+        $('#editCity').submit(function(e) {
             e.preventDefault();
 
             $.ajax({
-                url: "{{ route('countries.update') }}",
+                url: "{{ route('cities.update') }}",
                 method: 'POST',
                 type: "PUT",
                 data: new FormData(this),
@@ -143,7 +126,6 @@
 
                 success: function(data, status) {
                     $("#datatable").html(data);
-                    $("#addCountry")[0].reset();
                     $("#editModal").modal('hide');
                     toastr.success('✅ تم التعديل بنجاح');
                     $('#dataTable').DataTable().draw();
@@ -153,7 +135,7 @@
                     if ($.isEmptyObject(errors) == false) {
                         $('.text-danger').addClass('d-none');
                         $.each(errors.errors, function(key, value) {
-                            var errorId = '#' + key + '_error2';
+                            var errorId = '#' + key + '_error';
                             $(errorId).removeClass('d-none');
                             $(errorId).text(value);
                         });
@@ -170,7 +152,7 @@
                 let _token = $("input[name=_token]").val();
                 let id = $(this).data("id");
                 $.ajax({
-                    url: "{{ route('countries.destroy') }}",
+                    url: "{{ route('cities.destroy') }}",
                     type: "DELETE",
                     data: {
                         _token: _token,
@@ -190,5 +172,4 @@
             }
         });
     </script>
-
 @stop
