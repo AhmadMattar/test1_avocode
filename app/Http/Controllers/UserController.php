@@ -19,11 +19,11 @@ class UserController extends Controller
         return view('users.index', compact('countries'));
     }
 
-    public function getUsers()
+    public function indexTable()
     {
         return DataTables::of(User::query())
         ->addColumn('checkbox', function($row){
-            return '<input type="checkbox" name="users_checkbox[]" class="users_checkbox" value="'.$row->id.'" />';
+            return '<input type="checkbox" name="items_checkbox[]" class="items_checkbox" value="'.$row->id.'" />';
         })
         ->addColumn('status', function ($row) {
                     return $row->status ? 'Active' : 'Inactive';

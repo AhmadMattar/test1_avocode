@@ -20,11 +20,11 @@ class CityController extends Controller
         return view('cities.index', compact('countries'));
     }
 
-    public function getCities()
+    public function indexTable()
     {
         return DataTables::of(City::query())
         ->addColumn('checkbox', function($row){
-            return '<input type="checkbox" name="cities_checkbox[]" class="cities_checkbox" value="'.$row->id.'" />';
+            return '<input type="checkbox" name="items_checkbox[]" class="items_checkbox" value="'.$row->id.'" />';
         })
         ->addColumn('status', function ($row) {
                     return $row->status ? 'Active' : 'Inactive';

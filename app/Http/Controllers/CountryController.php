@@ -21,11 +21,11 @@ class CountryController extends Controller
         return view('countries.index');
     }
 
-    public function getCountries()
+    public function indexTable()
     {
         return DataTables::of(Country::query())
         ->addColumn('checkbox', function($row){
-            return '<input type="checkbox" name="countries_checkbox[]" class="countries_checkbox" value="'.$row->id.'" />';
+            return '<input type="checkbox" name="items_checkbox[]" class="items_checkbox" value="'.$row->id.'" />';
         })
         ->addColumn('cover', function ($row) {
             $url = $row->cover;

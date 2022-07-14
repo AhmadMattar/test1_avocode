@@ -27,7 +27,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::delete('/delete-all', [CountryController::class, 'deleteAll'])->name('deleteAll');
         Route::put('/activeAll', [CountryController::class, 'activeAll'])->name('ativeAll');
         Route::put('/disactiveAll', [CountryController::class, 'disactiveAll'])->name('disativeAll');
-        Route::get('/data', [CountryController::class, 'getCountries'])->name('data');
+        Route::get('/data', [CountryController::class, 'indexTable'])->name('data');
     });
 
     Route::prefix('cities')->name('cities.')->group(function(){
@@ -38,8 +38,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::delete('/delete-all', [CityController::class, 'deleteAll'])->name('deleteAll');
         Route::put('/activeAll', [CityController::class, 'activeAll'])->name('ativeAll');
         Route::put('/disactiveAll', [CityController::class, 'disactiveAll'])->name('disativeAll');
-        Route::get('/data', [CityController::class, 'getCities'])->name('data');
+        Route::get('/data', [CityController::class, 'indexTable'])->name('data');
     });
+    
     Route::prefix('users')->name('users.')->group(function(){
         Route::get('/', [UserController::class, 'index'])->name('index');
         Route::post('', [UserController::class, 'store'])->name('store');
@@ -48,8 +49,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::delete('/delete-all', [UserController::class, 'deleteAll'])->name('deleteAll');
         Route::put('/activeAll', [UserController::class, 'activeAll'])->name('ativeAll');
         Route::put('/disactiveAll', [UserController::class, 'disactiveAll'])->name('disativeAll');
-        Route::get('/data', [UserController::class, 'getUsers'])->name('data');
-
+        Route::get('/data', [UserController::class, 'indexTable'])->name('data');
         Route::get('/cities/get-cities', [UserController::class, 'get_cities'])->name('get_cities');
     });
 });

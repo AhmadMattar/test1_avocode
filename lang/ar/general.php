@@ -27,5 +27,7 @@ return [
     'Delete'    => 'حذف',
     'Active'    => 'تفعيل',
     'Disactive' => 'تعطيل',
+
+    'Close'     => 'إالغاء',
 ];
 

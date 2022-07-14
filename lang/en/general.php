@@ -27,5 +27,6 @@ return [
     'Delete'    => 'Delete',
     'Active'    => 'Active',
     'Disactive' => 'Disactive',
+    'Close'     => 'Close',
 ];
 

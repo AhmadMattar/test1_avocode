@@ -1,4 +1,4 @@
-<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <!-- Vertically centered scrollable modal -->
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="mr-2" id="editUser" enctype="multipart/form-data">
+                <form class="mr-2" id="edit" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
                     <input type="hidden" class="form-control" name="id" id="user_id">

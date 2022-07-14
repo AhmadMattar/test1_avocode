@@ -1,13 +1,13 @@
-<div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <!-- Vertically centered scrollable modal -->
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addUserModal">{{__('general.Add_user')}}</h5>
+                <h5 class="modal-title" id="addModal">{{__('general.Add_user')}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="mr-2" id="addUser" enctype="multipart/form-data">
+                <form class="mr-2" id="add" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <Label for="first_name">{{ __('general.first_name') }}</Label>
@@ -62,7 +62,7 @@
                             <label for="cover">{{ __('general.photo') }}</label>
                             <br>
                             <div class="file-loading">
-                                <input type="file" name="cover" id="countryImage" class="file-input-overview">
+                                <input type="file" name="cover" id="Image" class="file-input-overview">
                                 <span class="text-danger error-text" id="cover_error"></span>
                             </div>
                         </div>

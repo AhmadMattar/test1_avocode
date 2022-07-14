@@ -1,4 +1,4 @@
-<div class="modal fade" id="addCityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <!-- Vertically centered scrollable modal -->
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="mr-2" id="addCity">
+                <form class="mr-2" id="add">
                     @csrf
                     @foreach (config('app.langauges') as $key => $value)
                         <div class="form-group">
@@ -25,7 +25,7 @@
                             <option value="0" {{old('status') == 0 ? 'selected' : null}}>Inactive</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="country_id">{{__('general.country')}}</label>
                         <select name="country_id" class="form-control">

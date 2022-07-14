@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="mr-2" id="editCity">
+                <form class="mr-2" id="edit">
                     @method('PUT')
                     @csrf
                     <input type="hidden" class="form-control" name="id" id="city_id" value="">
@@ -26,7 +26,7 @@
                             <option value="0" {{old('status') == 0 ? 'selected' : null}}>Inactive</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="edit_country_id">{{__('general.country')}}</label>
                         <select name="country_id" class="form-control" id="edit_country_id">

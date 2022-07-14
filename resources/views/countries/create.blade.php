@@ -1,4 +1,4 @@
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <!-- Vertically centered scrollable modal -->
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="mr-2" id="addCountry" enctype="multipart/form-data">
+                <form class="mr-2" id="add" enctype="multipart/form-data">
                     @csrf
                     @foreach (config('app.langauges') as $key => $value)
                         <div class="form-group">
@@ -35,7 +35,7 @@
                             <label for="cover">{{__('general.photo')}}</label>
                             <br>
                             <div class="file-loading">
-                                <input type="file" name="cover" id="countryImage" class="file-input-overview">
+                                <input type="file" name="cover" id="Image" class="file-input-overview">
                                 <span class="text-danger error-text" id="cover_error"></span>
                             </div>
                         </div>
