@@ -21,7 +21,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
     Route::prefix('countries')->name('countries.')->group(function(){
         Route::get('/', [CountryController::class, 'index'])->name('index');
-        Route::post('', [CountryController::class, 'store'])->name('store');
+        Route::post('/', [CountryController::class, 'store'])->name('store');
         Route::put('/update', [CountryController::class, 'update'])->name('update');
         Route::delete('/delete', [CountryController::class, 'destroy'])->name('destroy');
         Route::delete('/delete-all', [CountryController::class, 'deleteAll'])->name('deleteAll');
@@ -32,7 +32,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 
     Route::prefix('cities')->name('cities.')->group(function(){
         Route::get('/', [CityController::class, 'index'])->name('index');
-        Route::post('', [CityController::class, 'store'])->name('store');
+        Route::post('/', [CityController::class, 'store'])->name('store');
         Route::put('/update', [CityController::class, 'update'])->name('update');
         Route::delete('/delete', [CityController::class, 'destroy'])->name('destroy');
         Route::delete('/delete-all', [CityController::class, 'deleteAll'])->name('deleteAll');
@@ -40,10 +40,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::put('/disactiveAll', [CityController::class, 'disactiveAll'])->name('disativeAll');
         Route::get('/data', [CityController::class, 'indexTable'])->name('data');
     });
-    
+
     Route::prefix('users')->name('users.')->group(function(){
         Route::get('/', [UserController::class, 'index'])->name('index');
-        Route::post('', [UserController::class, 'store'])->name('store');
+        Route::post('/', [UserController::class, 'store'])->name('store');
         Route::put('/update', [UserController::class, 'update'])->name('update');
         Route::delete('/delete', [UserController::class, 'destroy'])->name('destroy');
         Route::delete('/delete-all', [UserController::class, 'deleteAll'])->name('deleteAll');
@@ -53,9 +53,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::get('/cities/get-cities', [UserController::class, 'get_cities'])->name('get_cities');
     });
 });
-
-
-
 
 
 Route::get('/', function () {
