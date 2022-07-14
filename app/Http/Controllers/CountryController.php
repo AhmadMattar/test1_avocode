@@ -24,9 +24,15 @@ class CountryController extends Controller
     public function getCountries()
     {
         return DataTables::of(Country::query())
+        ->addColumn('checkbox', function($row){
+            return '<input type="checkbox" name="countries_checkbox[]" class="countries_checkbox" value="'.$row->id.'" />';
+        })
         ->addColumn('cover', function ($row) {
             $url = $row->cover;
             return '<img src="'.$url.'"  width="40" class="img-rounded" align="center" />';
+        })
+        ->addColumn('status', function ($row) {
+            return $row->status ? 'Active' : 'Inactive';
         })
         ->addIndexColumn()
         ->addColumn('action', function($row){
@@ -48,7 +54,7 @@ class CountryController extends Controller
             <a id="deleteBtn" data-id="' . $row->id . '" class="deleteCountry btn btn-danger btn-sm"  data-toggle="modal" data-target="#deletemodal"><i class="fa fa-trash"></i></a>';
             return $actionBtn;
         })
-        ->rawColumns(['cover', 'action'])->make(true);
+        ->rawColumns(['checkbox', 'cover', 'action'])->make(true);
     }
 
     /**
@@ -179,6 +185,34 @@ class CountryController extends Controller
             unlink('uploads/countries/'. $image_name);
         }
         $country->delete();
+        return true;
+    }
+
+    public function deleteAll(Request $request)
+    {
+        $ids = $request->id;
+        $countries = Country::whereIn('id', $ids);
+        $countries->delete();
+        return true;
+    }
+
+    public function activeAll(Request $request)
+    {
+        $ids = $request->id;
+        $countries = Country::whereIn('id', $ids);
+        $countries->update([
+            'status' => 1,
+        ]);
+        return true;
+    }
+
+    public function disactiveAll(Request $request)
+    {
+        $ids = $request->id;
+        $countries = Country::whereIn('id', $ids);
+        $countries->update([
+            'status' => 0,
+        ]);
         return true;
     }
 }

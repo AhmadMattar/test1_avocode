@@ -23,5 +23,9 @@ return [
     'Edit_country'  => 'تعديل الدولة',
     'Edit_city'     => 'تعديل المدينة',
     'Edit_user'     => 'تعديل المستخدم',
+
+    'Delete'    => 'حذف',
+    'Active'    => 'تفعيل',
+    'Disactive' => 'تعطيل',
 ];
 

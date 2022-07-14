@@ -22,6 +22,12 @@ class UserController extends Controller
     public function getUsers()
     {
         return DataTables::of(User::query())
+        ->addColumn('checkbox', function($row){
+            return '<input type="checkbox" name="users_checkbox[]" class="users_checkbox" value="'.$row->id.'" />';
+        })
+        ->addColumn('status', function ($row) {
+                    return $row->status ? 'Active' : 'Inactive';
+        })
         ->addColumn('cover', function ($row) {
             $url = $row->cover;
             return '<img src="'.$url.'"  width="40" class="img-rounded" align="center" />';
@@ -53,7 +59,7 @@ class UserController extends Controller
             <a id="deleteBtn" data-id="' . $row->id . '" class="deleteUser btn btn-danger btn-sm"  data-toggle="modal" data-target="#deletemodal"><i class="fa fa-trash"></i></a>';
             return $actionBtn;
         })
-        ->rawColumns(['cover', 'action', 'country', 'city'])->make(true);
+        ->rawColumns(['checkbox', 'cover', 'action', 'country', 'city'])->make(true);
     }
 
 
@@ -164,5 +170,33 @@ class UserController extends Controller
         $cities = City::whereCountryId($request->country_id)->get()->toArray();
 
         return response()->json($cities);
+    }
+
+    public function deleteAll(Request $request)
+    {
+        $ids = $request->id;
+        $users = User::whereIn('id', $ids);
+        $users->delete();
+        return true;
+    }
+
+    public function activeAll(Request $request)
+    {
+        $ids = $request->id;
+        $users = User::whereIn('id', $ids);
+        $users->update([
+            'status' => 1,
+        ]);
+        return true;
+    }
+
+    public function disactiveAll(Request $request)
+    {
+        $ids = $request->id;
+        $users = User::whereIn('id', $ids);
+        $users->update([
+            'status' => 0,
+        ]);
+        return true;
     }
 }

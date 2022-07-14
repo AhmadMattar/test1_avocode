@@ -23,6 +23,12 @@ class CityController extends Controller
     public function getCities()
     {
         return DataTables::of(City::query())
+        ->addColumn('checkbox', function($row){
+            return '<input type="checkbox" name="cities_checkbox[]" class="cities_checkbox" value="'.$row->id.'" />';
+        })
+        ->addColumn('status', function ($row) {
+                    return $row->status ? 'Active' : 'Inactive';
+        })
         ->addColumn('country_id', function($row){
             return $row->country->name;
         })
@@ -46,7 +52,7 @@ class CityController extends Controller
             <a id="deleteBtn" data-id="' . $row->id . '" class="deleteCity btn btn-danger btn-sm"  data-toggle="modal" data-target="#deletemodal"><i class="fa fa-trash"></i></a>';
             return $actionBtn;
         })
-        ->rawColumns(['action'])->make(true);
+        ->rawColumns(['checkbox', 'action'])->make(true);
     }
 
     /**
@@ -148,5 +154,33 @@ class CityController extends Controller
     public function destroy(Request $request)
     {
         return City::find($request->id)->delete();
+    }
+
+    public function deleteAll(Request $request)
+    {
+        $ids = $request->id;
+        $cities = City::whereIn('id', $ids);
+        $cities->delete();
+        return true;
+    }
+
+    public function activeAll(Request $request)
+    {
+        $ids = $request->id;
+        $cities = City::whereIn('id', $ids);
+        $cities->update([
+            'status' => 1,
+        ]);
+        return true;
+    }
+
+    public function disactiveAll(Request $request)
+    {
+        $ids = $request->id;
+        $cities = City::whereIn('id', $ids);
+        $cities->update([
+            'status' => 0,
+        ]);
+        return true;
     }
 }

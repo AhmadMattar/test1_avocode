@@ -24,6 +24,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::post('', [CountryController::class, 'store'])->name('store');
         Route::put('/update', [CountryController::class, 'update'])->name('update');
         Route::delete('/delete', [CountryController::class, 'destroy'])->name('destroy');
+        Route::delete('/delete-all', [CountryController::class, 'deleteAll'])->name('deleteAll');
+        Route::put('/activeAll', [CountryController::class, 'activeAll'])->name('ativeAll');
+        Route::put('/disactiveAll', [CountryController::class, 'disactiveAll'])->name('disativeAll');
         Route::get('/data', [CountryController::class, 'getCountries'])->name('data');
     });
 
@@ -32,6 +35,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::post('', [CityController::class, 'store'])->name('store');
         Route::put('/update', [CityController::class, 'update'])->name('update');
         Route::delete('/delete', [CityController::class, 'destroy'])->name('destroy');
+        Route::delete('/delete-all', [CityController::class, 'deleteAll'])->name('deleteAll');
+        Route::put('/activeAll', [CityController::class, 'activeAll'])->name('ativeAll');
+        Route::put('/disactiveAll', [CityController::class, 'disactiveAll'])->name('disativeAll');
         Route::get('/data', [CityController::class, 'getCities'])->name('data');
     });
     Route::prefix('users')->name('users.')->group(function(){
@@ -39,6 +45,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::post('', [UserController::class, 'store'])->name('store');
         Route::put('/update', [UserController::class, 'update'])->name('update');
         Route::delete('/delete', [UserController::class, 'destroy'])->name('destroy');
+        Route::delete('/delete-all', [UserController::class, 'deleteAll'])->name('deleteAll');
+        Route::put('/activeAll', [UserController::class, 'activeAll'])->name('ativeAll');
+        Route::put('/disactiveAll', [UserController::class, 'disactiveAll'])->name('disativeAll');
         Route::get('/data', [UserController::class, 'getUsers'])->name('data');
 
         Route::get('/cities/get-cities', [UserController::class, 'get_cities'])->name('get_cities');

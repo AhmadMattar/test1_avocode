@@ -23,5 +23,9 @@ return [
     'Edit_country' => 'Edit country',
     'Edit_city' => 'Edit city',
     'Edit_user' => 'Edit user',
+
+    'Delete'    => 'Delete',
+    'Active'    => 'Active',
+    'Disactive' => 'Disactive',
 ];
 
