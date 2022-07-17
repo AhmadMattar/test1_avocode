@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CityController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\CountryController;
+use App\Http\Controllers\Backend\CityController;
+use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Backend\CountryController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
@@ -27,7 +27,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::delete('/delete-all', [CountryController::class, 'deleteAll'])->name('deleteAll');
         Route::put('/activeAll', [CountryController::class, 'activeAll'])->name('ativeAll');
         Route::put('/disactiveAll', [CountryController::class, 'disactiveAll'])->name('disativeAll');
-        Route::get('/data', [CountryController::class, 'indexTable'])->name('data');
+        Route::get('/index-table', [CountryController::class, 'indexTable'])->name('indexTable');
     });
 
     Route::prefix('cities')->name('cities.')->group(function(){
@@ -38,7 +38,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::delete('/delete-all', [CityController::class, 'deleteAll'])->name('deleteAll');
         Route::put('/activeAll', [CityController::class, 'activeAll'])->name('ativeAll');
         Route::put('/disactiveAll', [CityController::class, 'disactiveAll'])->name('disativeAll');
-        Route::get('/data', [CityController::class, 'indexTable'])->name('data');
+        Route::get('/index-table', [CityController::class, 'indexTable'])->name('indexTable');
     });
 
     Route::prefix('users')->name('users.')->group(function(){
@@ -49,12 +49,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::delete('/delete-all', [UserController::class, 'deleteAll'])->name('deleteAll');
         Route::put('/activeAll', [UserController::class, 'activeAll'])->name('ativeAll');
         Route::put('/disactiveAll', [UserController::class, 'disactiveAll'])->name('disativeAll');
-        Route::get('/data', [UserController::class, 'indexTable'])->name('data');
+        Route::get('/index-table', [UserController::class, 'indexTable'])->name('indexTable');
         Route::get('/cities/get-cities', [UserController::class, 'get_cities'])->name('get_cities');
     });
 });
 
 
 Route::get('/', function () {
-    return view('layouts.master');
+    return view('Backend.layouts.master');
 });

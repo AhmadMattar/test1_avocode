@@ -7,23 +7,23 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <title>Sales Admin | CORK - Multipurpose Bootstrap Dashboard Template </title>
-    <link rel="icon" type="image/x-icon" href="{{asset('assets/img/favicon.ico')}}"/>
-    <link href="{{asset('assets/css/loader.css')}}" rel="stylesheet" type="text/css" />
-    <script src="{{asset('assets/js/loader.js')}}"></script>
+    <link rel="icon" type="image/x-icon" href="{{asset('Backend/assets/img/favicon.ico')}}"/>
+    <link href="{{asset('Backend/assets/css/loader.css')}}" rel="stylesheet" type="text/css" />
+    <script src="{{asset('Backend/assets/js/loader.js')}}"></script>
 
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
-    <link href="{{asset('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/css/plugins.css')}}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="{{asset('vendor/bootstrap-input-file/css/fileinput.min.css')}}">
+    <link href="{{asset('Backend/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('Backend/assets/css/plugins.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{asset('Backend/vendor/bootstrap-input-file/css/fileinput.min.css')}}">
     <!-- END GLOBAL MANDATORY STYLES -->
-    <link rel="stylesheet" href="{{asset('assets/css/toastr.min.css')}}">
+    <link rel="stylesheet" href="{{asset('Backend/assets/css/toastr.min.css')}}">
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    <link href="{{asset('plugins/apex/apexcharts.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('assets/css/dashboard/dash_1.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('Backend/plugins/apex/apexcharts.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('Backend/assets/css/dashboard/dash_1.css')}}" rel="stylesheet" type="text/css" />
     <link  href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
@@ -43,14 +43,14 @@
         <div class="spinner-grow align-self-center"></div>
     </div></div></div>
     <!--  END LOADER -->
-    @include('partial.navbar')
+    @include('Backend.partial.navbar')
 
     <!--  BEGIN MAIN CONTAINER  -->
     <div class="main-container" id="container">
 
         <div class="overlay"></div>
         <div class="search-overlay"></div>
-        @include('partial.sidebar')
+        @include('Backend.partial.sidebar')
         <!--  BEGIN CONTENT AREA  -->
         <div id="content" class="main-content">
             <div class="layout-px-spacing">
@@ -63,11 +63,10 @@
                                     @method('DELETE')
                                     @csrf
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="ModalLabel">Confirmation</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <h4 align="center" style="margin:0;">Are you sure you want to Delete this data?</h4>
+                                        <h4 align="center" style="margin:0;">{{__('general.confirm_delete')}}</h4>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-dark"
@@ -87,11 +86,10 @@
                                     @method('PUT')
                                     @csrf
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="ModalLabel">Confirmation</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <h4 align="center" style="margin:0;">Are you sure you want to Active this data?</h4>
+                                        <h4 align="center" style="margin:0;">{{__('general.confirm_active')}}</h4>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-dark"
@@ -111,11 +109,10 @@
                                     @method('PUT')
                                     @csrf
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="ModalLabel">Confirmation</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <h4 align="center" style="margin:0;">Are you sure you want to Disactive this data?</h4>
+                                        <h4 align="center" style="margin:0;">{{__('general.confirm_disactive')}}</h4>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-dark"
@@ -127,39 +124,39 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     @yield('content')
                 </div>
             </div>
-            @include('partial.footer')
+            @include('Backend.partial.footer')
         </div>
     </div>
     <!-- END MAIN CONTAINER -->
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-    <script src="{{asset('assets/js/libs/jquery-3.1.1.min.js')}}"></script>
-    <script src="{{asset('bootstrap/js/popper.min.js')}}"></script>
-    <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('plugins/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
-    <script src="{{asset('assets/js/app.js')}}"></script>
+    <script src="{{asset('Backend/assets/js/libs/jquery-3.1.1.min.js')}}"></script>
+    <script src="{{asset('Backend/bootstrap/js/popper.min.js')}}"></script>
+    <script src="{{asset('Backend/bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('Backend/plugins/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
+    <script src="{{asset('Backend/assets/js/app.js')}}"></script>
     <script>
         $(document).ready(function() {
             App.init();
         });
     </script>
-    <script src="{{asset('assets/js/custom.js')}}"></script>
+    <script src="{{asset('Backend/assets/js/custom.js')}}"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-    <script src="{{asset('assets/js/customer.js')}}"></script>
-    <script src="{{asset('plugins/apex/apexcharts.min.js')}}"></script>
-    <script src="{{asset('assets/js/dashboard/dash_1.js')}}"></script>
-    <script src="{{asset('assets/js/toastr.min.js')}}"></script>
+    <script src="{{asset('Backend/assets/js/customer.js')}}"></script>
+    <script src="{{asset('Backend/plugins/apex/apexcharts.min.js')}}"></script>
+    <script src="{{asset('Backend/assets/js/dashboard/dash_1.js')}}"></script>
+    <script src="{{asset('Backend/assets/js/toastr.min.js')}}"></script>
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-    <script src="{{asset('vendor/bootstrap-input-file/js/fileinput.min.js')}}"></script>
+    <script src="{{asset('Backend/vendor/bootstrap-input-file/js/fileinput.min.js')}}"></script>
     @yield('script')
 </body>
 </html>

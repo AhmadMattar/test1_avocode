@@ -29,10 +29,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(City::class);
     }
-    
+
     public function getCoverAttribute($value)
     {
-        return url('/') .'/uploads/users/'.$value;
+        return url('/') .'/Backend/uploads/users/'.$value;
     }
 
 }

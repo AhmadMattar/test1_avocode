@@ -53,10 +53,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="status">Status</label>
+                        <label for="status">{{__('general.Status')}}</label>
                         <select name="status" class="form-control" id="status">
-                            <option value="1" {{old('status') == 1 ? 'selected' : null}}>Active</option>
-                            <option value="0" {{old('status') == 0 ? 'selected' : null}}>Inactive</option>
+                            <option value="1" {{old('status') == 1 ? 'selected' : null}}>{{__('general.Active')}}</option>
+                            <option value="0" {{old('status') == 0 ? 'selected' : null}}>{{__('general.Disactive')}}</option>
                         </select>
                     </div>
                     <div class="row pt-4">

@@ -29,5 +29,24 @@ return [
     'Disactive' => 'تعطيل',
 
     'Close'     => 'إالغاء',
+    'Status'    => 'الحالة',
+    'Activated' => 'مفعل',
+    'Inactivated'  => 'غير مفعل',
+
+    'Search'    => 'بحث',
+    'Reset'     => 'إالغاء البحث',
+
+    'confirm_delete'    => 'هل أنت متأكد من حذف هذه البيانات؟',
+    'confirm_active'    => 'هل أنت متأكد من تفعيل هذه البيانات؟',
+    'confirm_disactive'    => 'هل أنت متأكد من تعطيل هذه البيانات؟',
+
+    'select_country'    => 'اختر دولة',
+    'select_city'    => 'اختر مدينة',
+
+    'add_successfully'  => 'تمت الإضافة بنجاح',
+    'updated_successfully' => 'تم التعديل بنجاح',
+    'active_successfully' => 'تم التفعيل بنجاح',
+    'disactive_successfully' => 'تم إالغاء التفعيل بنجاح',
+    'delete_successfully' => 'تم الحذف بنجاح',
 ];
 

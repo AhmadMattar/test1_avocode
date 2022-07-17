@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
-use COM;
 use App\Models\City;
 use App\Models\User;
 use App\Models\Country;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use Yajra\DataTables\Facades\DataTables;
@@ -16,17 +16,46 @@ class UserController extends Controller
     public function index()
     {
         $countries = Country::all();
-        return view('users.index', compact('countries'));
+        return view('Backend.users.index', compact('countries'));
     }
 
     public function indexTable()
     {
         return DataTables::of(User::query())
+        ->filter(function ($query) {
+            if(request()->has('first_name')){
+                $query->where('first_name', 'like', "%". request()->first_name . "%");
+            }
+            if(request()->has('last_name')){
+                $query->where('last_name', 'like', "%". request()->last_name . "%");
+            }
+            if (request()->has('email')) {
+                $query->where('email', 'like', "%" . request()->email . "%");
+            }
+            if (request()->has('phone')) {
+                $query->where('phone', 'like', "%" . request()->phone . "%");
+            }
+            if (request()->has('country_id')) {
+                $query->when(request()->country_id != null, function ($query) {
+                    $query->whereCountryId(request()->country_id);
+                });
+            }
+            if (request()->has('city_id')) {
+                $query->when(request()->city_id != null, function ($query) {
+                    $query->whereCityId(request()->city_id);
+                });
+            }
+            if (request()->has('status')) {
+                $query->when(request()->status != null, function ($query) {
+                    $query->whereStatus(request()->status);
+                });
+            }
+        })
         ->addColumn('checkbox', function($row){
             return '<input type="checkbox" name="items_checkbox[]" class="items_checkbox" value="'.$row->id.'" />';
         })
         ->addColumn('status', function ($row) {
-                    return $row->status ? 'Active' : 'Inactive';
+                    return $row->status ? __('general.Activated') : __('general.Inactivated');
         })
         ->addColumn('cover', function ($row) {
             $url = $row->cover;
@@ -88,14 +117,14 @@ class UserController extends Controller
         if($request->file('cover'))
         {
             $image_name = $request->phone.".".$request->file('cover')->getClientOriginalExtension();
-            $path = public_path('/uploads/users/' . $image_name);
+            $path = public_path('/Backend/uploads/users/' . $image_name);
             Image::make($request->cover->getRealPath())->resize(500, null, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($path, 100);
             $data['cover'] = $image_name;
         }
         $user = User::create($data);
-        return response()->json($user);
+        return response()->json([$user, 'message' => __('general.add_successfully')]);
     }
 
     /**
@@ -132,11 +161,11 @@ class UserController extends Controller
         if($request->file('cover'))
         {
             $image_old_name = $request->cover->getClientOriginalName();
-            if($user->cover != null && File::exists('uploads/users/'. $image_old_name)){
-                unlink('uploads/users/'. $image_old_name);
+            if($user->cover != null && File::exists('Backend/uploads/users/'. $image_old_name)){
+                unlink('Backend/uploads/users/'. $image_old_name);
             }
             $image_name = $request->phone.".".$request->file('cover')->getClientOriginalExtension();
-            $path = public_path('/uploads/users/' . $image_name);
+            $path = public_path('/Backend/uploads/users/' . $image_name);
             Image::make($request->file('cover')->getRealPath())->resize(500, null, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($path, 100);
@@ -144,7 +173,7 @@ class UserController extends Controller
         }
 
         $user->update($data);
-        return response()->json($user);
+        return response()->json([$user, 'message' => __('general.updated_successfully')]);
 
     }
 
@@ -157,12 +186,12 @@ class UserController extends Controller
     public function destroy(Request $request)
     {
         $user = User::findOrFail($request->id);
-        $image_name = explode("/",$user->cover)[5];
-        if(File::exists('uploads/users/'. $image_name)){
-            unlink('uploads/users/'. $image_name);
+        $image_name = explode("/",$user->cover)[6];
+        if(File::exists('Backend/uploads/users/'. $image_name)){
+            unlink('Backend/uploads/users/'. $image_name);
         }
         $user->delete();
-        return true;
+        return response()->json([$user, 'message' => __('general.delete_successfully')]);
     }
 
     public function get_cities(Request $request)
@@ -177,7 +206,7 @@ class UserController extends Controller
         $ids = $request->id;
         $users = User::whereIn('id', $ids);
         $users->delete();
-        return true;
+        return response()->json([$users, 'message' => __('general.delete_successfully')]);
     }
 
     public function activeAll(Request $request)
@@ -187,7 +216,7 @@ class UserController extends Controller
         $users->update([
             'status' => 1,
         ]);
-        return true;
+        return response()->json([$users, 'message' => __('general.active_successfully')]);
     }
 
     public function disactiveAll(Request $request)
@@ -197,6 +226,6 @@ class UserController extends Controller
         $users->update([
             'status' => 0,
         ]);
-        return true;
+        return response()->json([$users, 'message' => __('general.disactive_successfully')]);
     }
 }

@@ -10,10 +10,11 @@ $('#add').submit(function (e) {
         processData: false,
 
         success: function (data, status) {
+            console.log(data);
             $("#datatable").html(data);
             $("#add")[0].reset();
             $("#addModal").modal('hide');
-            toastr.success('✅ تمت الإضافة بنجاح');
+            toastr.success(data.message);
             $('#dataTable').DataTable().draw();
         },
         error: function (data) {
@@ -44,7 +45,7 @@ $('#edit').submit(function (e) {
         success: function (data, status) {
             $("#datatable").html(data);
             $("#editModal").modal('hide');
-            toastr.success('✅ تم التعديل بنجاح');
+            toastr.success(data.message);
             $('#dataTable').DataTable().draw();
         },
         error: function (data) {
@@ -75,7 +76,7 @@ $(document).on('click', '#deleteBtn', function (event) {
             },
             success: function (data, status) {
 
-                toastr.warning('تم الحذف بنجاح');
+                toastr.warning(data.message);
                 $('#dataTable').DataTable().draw();
             },
             error: function (data) {
@@ -114,7 +115,7 @@ $(document).on('click', '#delete_ok_button', function () {
 
                 $('#selectAll').prop('checked', false);
                 $('#deleteModal').modal('hide');
-                toastr.warning('تم الحذف بنجاح');
+                toastr.warning(data.message);
                 $('#dataTable').DataTable().draw();
             },
             error: function (data) {
@@ -154,7 +155,7 @@ $(document).on('click', '#ok_button', function () {
 
                 $('#selectAll').prop('checked', false);
                 $('#confirmModal').modal('hide')
-                toastr.success('تم التفعيل بنجاح');
+                toastr.success(data.message);
                 $('#dataTable').DataTable().draw();
             },
             error: function (data) {
@@ -193,7 +194,7 @@ $(document).on('click', '#disactive_ok_button', function () {
 
                 $('#selectAll').prop('checked', false);
                 $('#disactiveModal').modal('hide')
-                toastr.success('تم إلغاء التفعيل بنجاح');
+                toastr.success(data.message);
                 $('#dataTable').DataTable().draw();
             },
             error: function (data) {

@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('Backend.layouts.master')
 @section('content')
     <div class="mt-10">
         <a class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addModal">
@@ -15,10 +15,12 @@
         <button class="btn btn-dark" id="disactive_button">
             {{ __('general.Disactive') }}
         </button>
-        @include('countries.create')
-        @include('countries.edit')
+        @include('Backend.countries.create')
+        @include('Backend.countries.edit')
+
+
     </div>
-    <hr>
+    @include('Backend.countries.filter.filter')
     <div class="table-responsive">
         <table class="table table-bordered table-hover table-striped mb-4" id="dataTable">
             <thead>
@@ -28,7 +30,7 @@
                     </th>
                     <th>{{ __('general.name') }}</th>
                     <th>{{ __('general.code') }}</th>
-                    <th>Status</th>
+                    <th>{{__('general.Status')}}</th>
                     <th>{{ __('general.photo') }}</th>
                     <th>Action</th>
                 </tr>
@@ -44,9 +46,15 @@
             $('#dataTable').DataTable({
                 processing: true,
                 serverSide: true,
-                searching: true,
+                searching: false,
                 ajax: {
-                    url: '{{ route('countries.data') }}',
+                    url: '{{ route('countries.indexTable') }}',
+                    data: function (data) {
+                            data.name = $('#searchName').val(),
+                            data.code = $('#searchCode').val(),
+                            data.status = $('#searchStatus').val(),
+                            data.search = $('input[type="search"]').val()
+                        }
                 },
                 columns: [{
                         data: 'checkbox',
@@ -57,7 +65,7 @@
                     {
                         data: 'name',
                         name: 'name',
-                        orderable: true,
+                        orderable: false,
                         searchable: true,
                     },
                     {
@@ -79,6 +87,16 @@
                         searchable: false
                     }
                 ]
+            });
+            $('#search').on('click', function(){
+                $('#dataTable').DataTable().draw();
+            });
+
+            $('#reset').on('click', function(){
+                $('#searchName').val('');
+                $('#searchCode').val('');
+                $('#searchStatus').val('');
+                $('#dataTable').DataTable().draw();
             });
         });
     </script>

@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('Backend.layouts.master')
 @section('content')
     <div class="mt-10">
         <a class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addModal"
@@ -17,10 +17,10 @@
         <button class="btn btn-dark" id="disactive_button">
             {{ __('general.Disactive') }}
         </button>
-        @include('cities.create')
-        @include('cities.edit')
+        @include('Backend.cities.create')
+        @include('Backend.cities.edit')
     </div>
-    <hr>
+    @include('Backend.cities.filter.filter')
     <div class="table-responsive">
         <table class="table table-bordered table-hover table-striped mb-4" id="dataTable">
             <thead>
@@ -29,8 +29,8 @@
                         <input type="checkbox" id="selectAll">
                     </th>
                     <th>{{ __('general.name') }}</th>
-                    <th>Country</th>
-                    <th>Status</th>
+                    <th>{{__('general.country')}}</th>
+                    <th>{{__('general.Status')}}</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -46,9 +46,15 @@
             $('#dataTable').DataTable({
                 processing: true,
                 serverSide: true,
-                searching: true,
+                searching: false,
                 ajax: {
-                    url: '{{ route('cities.data') }}',
+                    url: '{{ route('cities.indexTable') }}',
+                    data: function (data) {
+                            data.name = $('#searchName').val();
+                            data.country_id = $('#searchCountry').val(),
+                            data.status = $('#searchStatus').val(),
+                            data.search = $('input[type="search"]').val()
+                        }
                 },
                 columns: [{
                         data: 'checkbox',
@@ -59,16 +65,18 @@
                     {
                         data: 'name',
                         name: 'name',
-                        orderable: true,
+                        orderable: false,
                         searchable: true,
-                    },
-                    {
-                        data: 'status',
-                        name: 'status',
                     },
                     {
                         data: 'country_id',
                         name: 'country_name',
+                        orderable: false,
+
+                    },
+                    {
+                        data: 'status',
+                        name: 'status',
                     },
                     {
                         data: 'action',
@@ -77,6 +85,16 @@
                         searchable: false
                     }
                 ]
+            });
+            $('#search').on('click', function(){
+                $('#dataTable').DataTable().draw();
+            });
+
+            $('#reset').on('click', function(){
+                $('#searchName').val('');
+                $('#searchCountry').val('');
+                $('#searchStatus').val('');
+                $('#dataTable').DataTable().draw();
             });
         });
     </script>

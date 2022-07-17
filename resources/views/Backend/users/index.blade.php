@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('Backend.layouts.master')
 @section('content')
     <div class="mt-10">
         <a class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addModal">
@@ -16,10 +16,10 @@
         <button class="btn btn-dark" id="disactive_button">
             {{ __('general.Disactive') }}
         </button>
-        @include('users.create')
-        @include('users.edit')
+        @include('Backend.users.create')
+        @include('Backend.users.edit')
     </div>
-    <hr>
+    @include('Backend.users.filter.filter')
     <div class="table-responsive">
         <table class="table table-bordered table-hover table-striped mb-4" id="dataTable">
             <thead>
@@ -33,7 +33,7 @@
                     <th>{{ __('general.phone') }}</th>
                     <th>{{ __('general.country') }}</th>
                     <th>{{ __('general.city') }}</th>
-                    <th>Status</th>
+                    <th>{{__('general.Status')}}</th>
                     <th>{{ __('general.photo') }}</th>
                     <th>Action</th>
                 </tr>
@@ -49,9 +49,19 @@
             $('#dataTable').DataTable({
                 processing: true,
                 serverSide: true,
-                searching: true,
+                searching: false,
                 ajax: {
-                    url: '{{ route('users.data') }}',
+                    url: '{{ route('users.indexTable') }}',
+                    data: function(data) {
+                        data.first_name = $('#searchFirstName').val(),
+                            data.last_name = $('#searchLastName').val(),
+                            data.country_id = $('#search_country_id').val(),
+                            data.city_id = $('#search_city_id').val(),
+                            data.email = $('#searchEmail').val(),
+                            data.phone = $('#searchPhone').val(),
+                            data.status = $('#searchStatus').val(),
+                            data.search = $('input[type="search"]').val()
+                    },
                 },
                 columns: [{
                         data: 'checkbox',
@@ -107,6 +117,42 @@
                     }
                 ]
             });
+
+            $("#search_country_id").change(function() {
+                populateCities();
+            });
+
+            function populateCities() {
+                let countryIdVal = $('#search_country_id').val() != null ? $('#search_country_id').val() :
+                    '{{ old('search_country_id') }}';
+                $.get("{{ route('users.get_cities') }}", {
+                    country_id: countryIdVal
+                }, function(data) {
+                    $('option', $("#search_city_id")).remove();
+                    $("#search_city_id").append($('<option></option>').val('').html('{{__('general.select_city')}}'));
+                    $.each(data, function(val, text) {
+                        let selectedVal = text.id == '{{ old('search_city_id') }}' ? "selected" : "";
+                        $("#search_city_id").append($('<option ' + selectedVal + '></option>').val(
+                            text
+                            .id).html(text.name));
+                    });
+                }, "json");
+            }
+
+            $('#search').on('click', function(){
+                $('#dataTable').DataTable().draw();
+            });
+
+            $('#reset').on('click', function(){
+                $('#searchFirstName').val('');
+                $('#searchLastName').val('');
+                $('#search_country_id').val('');
+                $('#search_city_id').val('');
+                $('#searchEmail').val('');
+                $('#searchPhone').val('');
+                $('#searchStatus').val('');
+                $('#dataTable').DataTable().draw();
+            });
         });
     </script>
     {{-- select country and city --}}
@@ -123,7 +169,7 @@
                 country_id: countryIdVal
             }, function(data) {
                 $('option', $("#city_id")).remove();
-                $("#city_id").append($('<option></option>').val('').html(' --- '));
+                $("#city_id").append($('<option></option>').val('').html(' {{__('general.select_city')}} '));
                 $.each(data, function(val, text) {
                     let selectedVal = text.id == '{{ old('city_id') }}' ? "selected" : "";
                     $("#city_id").append($('<option ' + selectedVal + '></option>').val(text

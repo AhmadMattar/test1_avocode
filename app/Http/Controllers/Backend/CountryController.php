@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
 use App\Models\Country;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\File;
 
 class CountryController extends Controller
 {
@@ -18,12 +19,25 @@ class CountryController extends Controller
     public function index()
     {
 
-        return view('countries.index');
+        return view('Backend.countries.index');
     }
 
     public function indexTable()
     {
         return DataTables::of(Country::query())
+        ->filter(function ($query) {
+            if (request()->has('name')){
+                $query->whereTranslationLike('name', '%'. request()->name .'%');
+            }
+            if (request()->has('code')) {
+                $query->where('code', 'like', "%" . request()->code . "%");
+            }
+            if (request()->has('status')) {
+                $query->when(request()->status != null, function ($query) {
+                    $query->whereStatus(request()->status);
+                });
+            }
+        })
         ->addColumn('checkbox', function($row){
             return '<input type="checkbox" name="items_checkbox[]" class="items_checkbox" value="'.$row->id.'" />';
         })
@@ -32,7 +46,7 @@ class CountryController extends Controller
             return '<img src="'.$url.'"  width="40" class="img-rounded" align="center" />';
         })
         ->addColumn('status', function ($row) {
-            return $row->status ? 'Active' : 'Inactive';
+            return $row->status ? __('general.Activated') : __('general.Inactivated');
         })
         ->addIndexColumn()
         ->addColumn('action', function($row){
@@ -94,14 +108,14 @@ class CountryController extends Controller
         if($request->file('cover'))
         {
             $image_name = $request->code.".".$request->file('cover')->getClientOriginalExtension();
-            $path = public_path('/uploads/countries/' . $image_name);
+            $path = public_path('Backend/uploads/countries/' . $image_name);
             Image::make($request->cover->getRealPath())->resize(500, null, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($path, 100);
             $data['cover'] = $image_name;
         }
         $country = Country::create($data);
-        return response()->json($country);
+        return response()->json([$country, 'message' => __('general.add_successfully')]);
     }
 
     /**
@@ -155,11 +169,11 @@ class CountryController extends Controller
         if($request->file('cover'))
         {
             $image_old_name = $request->cover->getClientOriginalName();
-            if($country->cover != null && File::exists('uploads/countries/'. $image_old_name)){
-                unlink('uploads/countries/'. $image_old_name);
+            if($country->cover != null && File::exists('Backend/uploads/countries/'. $image_old_name)){
+                unlink('Backend/uploads/countries/'. $image_old_name);
             }
             $image_name = $request->code.".".$request->file('cover')->getClientOriginalExtension();
-            $path = public_path('/uploads/countries/' . $image_name);
+            $path = public_path('Backend/uploads/countries/' . $image_name);
             Image::make($request->file('cover')->getRealPath())->resize(500, null, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($path, 100);
@@ -167,7 +181,7 @@ class CountryController extends Controller
         }
 
         $country->update($data);
-        return response()->json($country);
+        return response()->json([$country, 'message' => __('general.updated_successfully')]);
 
     }
 
@@ -180,12 +194,12 @@ class CountryController extends Controller
     public function destroy(Request $request)
     {
         $country = Country::findOrFail($request->id);
-        $image_name = explode("/",$country->cover)[5];
-        if(File::exists('uploads/countries/'. $image_name)){
-            unlink('uploads/countries/'. $image_name);
+        $image_name = explode("/",$country->cover)[6];
+        if(File::exists('Backend/uploads/countries/'. $image_name)){
+            unlink('Backend/uploads/countries/'. $image_name);
         }
         $country->delete();
-        return true;
+        return response()->json([$country, 'message' => __('general.delete_successfully')]);
     }
 
     public function deleteAll(Request $request)
@@ -193,7 +207,7 @@ class CountryController extends Controller
         $ids = $request->id;
         $countries = Country::whereIn('id', $ids);
         $countries->delete();
-        return true;
+        return response()->json([$countries, 'message' => __('general.delete_successfully')]);
     }
 
     public function activeAll(Request $request)
@@ -203,7 +217,7 @@ class CountryController extends Controller
         $countries->update([
             'status' => 1,
         ]);
-        return true;
+        return response()->json([$countries, 'message' => __('general.active_successfully')]);
     }
 
     public function disactiveAll(Request $request)
@@ -213,7 +227,7 @@ class CountryController extends Controller
         $countries->update([
             'status' => 0,
         ]);
-        return true;
+        return response()->json([$countries, 'message' => __('general.disactive_successfully')]);
     }
 }
 

@@ -34,7 +34,7 @@
                             <div class="form-group">
                                 <label for="country_id">{{__('general.country')}}</label>
                                 <select name="country_id" class="form-control" id="country_id">
-                                    <option value="">---</option>
+                                    <option value="">{{__('general.select_country')}}</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}"
                                             {{ old('country_id') == $country->id ? 'selected' : null }}>
@@ -51,10 +51,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="status">Status</label>
+                        <label for="status">{{__('general.Status')}}</label>
                         <select name="status" class="form-control">
-                            <option value="1" {{old('status') == 1 ? 'selected' : null}}>Active</option>
-                            <option value="0" {{old('status') == 0 ? 'selected' : null}}>Inactive</option>
+                            <option value="1" {{old('status') == 1 ? 'selected' : null}}>{{__('general.Active')}}</option>
+                            <option value="0" {{old('status') == 0 ? 'selected' : null}}>{{__('general.Disactive')}}</option>
                         </select>
                     </div>
                     <div class="row pt-4">

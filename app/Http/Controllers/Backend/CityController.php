@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
 use App\Models\City;
 use App\Models\Country;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 
 class CityController extends Controller
@@ -17,17 +18,32 @@ class CityController extends Controller
     public function index()
     {
         $countries = Country::all();
-        return view('cities.index', compact('countries'));
+        return view('Backend.cities.index', compact('countries'));
     }
 
     public function indexTable()
     {
         return DataTables::of(City::query())
+        ->filter(function ($query) {
+            if (request()->has('name')){
+                $query->whereTranslationLike('name', '%'. request()->name .'%');
+            }
+            if (request()->has('country_id')) {
+                $query->when(request()->country_id != null, function ($query) {
+                    $query->whereCountryId(request()->country_id);
+                });
+            }
+            if (request()->has('status')) {
+                $query->when(request()->status != null, function ($query) {
+                    $query->whereStatus(request()->status);
+                });
+            }
+        })
         ->addColumn('checkbox', function($row){
             return '<input type="checkbox" name="items_checkbox[]" class="items_checkbox" value="'.$row->id.'" />';
         })
         ->addColumn('status', function ($row) {
-                    return $row->status ? 'Active' : 'Inactive';
+                    return $row->status ? __('general.Activated') : __('general.Inactivated');
         })
         ->addColumn('country_id', function($row){
             return $row->country->name;
@@ -90,7 +106,7 @@ class CityController extends Controller
         }
 
         $city = City::create($data);
-        return response()->json($city);
+        return response()->json([$city, 'message' => __('general.add_successfully')]);
     }
 
     /**
@@ -142,7 +158,7 @@ class CityController extends Controller
         }
 
         $city->update($data);
-        return response()->json($city);
+        return response()->json([$city, 'message' => __('general.updated_successfully')]);
     }
 
     /**
@@ -153,7 +169,9 @@ class CityController extends Controller
      */
     public function destroy(Request $request)
     {
-        return City::find($request->id)->delete();
+        $city = City::find($request->id);
+        $city->delete();
+        return response()->json([$city, 'message' => __('general.delete_successfully')]);
     }
 
     public function deleteAll(Request $request)
@@ -161,7 +179,7 @@ class CityController extends Controller
         $ids = $request->id;
         $cities = City::whereIn('id', $ids);
         $cities->delete();
-        return true;
+        return response()->json([$cities, 'message' => __('general.delete_successfully')]);
     }
 
     public function activeAll(Request $request)
@@ -171,7 +189,7 @@ class CityController extends Controller
         $cities->update([
             'status' => 1,
         ]);
-        return true;
+        return response()->json([$cities, 'message' => __('general.active_successfully')]);
     }
 
     public function disactiveAll(Request $request)
@@ -181,6 +199,6 @@ class CityController extends Controller
         $cities->update([
             'status' => 0,
         ]);
-        return true;
+        return response()->json([$cities, 'message' => __('general.disactive_successfully')]);
     }
 }

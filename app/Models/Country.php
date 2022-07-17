@@ -20,8 +20,13 @@ class Country extends Model implements TranslatableContract
     {
         return $this->hasMany(City::class);
     }
+
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
     public function getCoverAttribute($value)
     {
-        return url('/') .'/uploads/countries/'.$value;
+        return url('/') .'/Backend/uploads/countries/'.$value;
     }
 }
