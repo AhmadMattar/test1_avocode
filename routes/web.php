@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\CityController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\CountryController;
+use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\DistrictController;
 use App\Models\District;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -55,18 +56,31 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::get('/cities/get-cities', [DistrictController::class, 'get_cities'])->name('get_cities');
     });
 
-    Route::prefix('users')->name('users.')->group(function(){
-        Route::get('/', [UserController::class, 'index'])->name('index');
-        Route::post('/', [UserController::class, 'store'])->name('store');
-        Route::put('/update', [UserController::class, 'update'])->name('update');
-        Route::delete('/delete', [UserController::class, 'destroy'])->name('destroy');
-        Route::delete('/delete-all', [UserController::class, 'deleteAll'])->name('deleteAll');
-        Route::put('/activeAll', [UserController::class, 'activeAll'])->name('ativeAll');
-        Route::put('/disactiveAll', [UserController::class, 'disactiveAll'])->name('disativeAll');
-        Route::get('/index-table', [UserController::class, 'indexTable'])->name('indexTable');
-        Route::get('/cities/get-cities', [UserController::class, 'get_cities'])->name('get_cities');
-        Route::get('/district/get-district', [UserController::class, 'get_district'])->name('get_district');
+    Route::prefix('customers')->name('customers.')->group(function(){
+        Route::get('/', [CustomerController::class, 'index'])->name('index');
+        Route::post('/', [CustomerController::class, 'store'])->name('store');
+        Route::put('/update', [CustomerController::class, 'update'])->name('update');
+        Route::delete('/delete', [CustomerController::class, 'destroy'])->name('destroy');
+        Route::delete('/delete-all', [CustomerController::class, 'deleteAll'])->name('deleteAll');
+        Route::put('/activeAll', [CustomerController::class, 'activeAll'])->name('ativeAll');
+        Route::put('/disactiveAll', [CustomerController::class, 'disactiveAll'])->name('disativeAll');
+        Route::get('/index-table', [CustomerController::class, 'indexTable'])->name('indexTable');
+        Route::get('/cities/get-cities', [CustomerController::class, 'get_cities'])->name('get_cities');
+        Route::get('/district/get-district', [CustomerController::class, 'get_district'])->name('get_district');
     });
+
+    // Route::prefix('users')->name('users.')->group(function(){
+    //     Route::get('/', [UserController::class, 'index'])->name('index');
+    //     Route::post('/', [UserController::class, 'store'])->name('store');
+    //     Route::put('/update', [UserController::class, 'update'])->name('update');
+    //     Route::delete('/delete', [UserController::class, 'destroy'])->name('destroy');
+    //     Route::delete('/delete-all', [UserController::class, 'deleteAll'])->name('deleteAll');
+    //     Route::put('/activeAll', [UserController::class, 'activeAll'])->name('ativeAll');
+    //     Route::put('/disactiveAll', [UserController::class, 'disactiveAll'])->name('disativeAll');
+    //     Route::get('/index-table', [UserController::class, 'indexTable'])->name('indexTable');
+    //     Route::get('/cities/get-cities', [UserController::class, 'get_cities'])->name('get_cities');
+    //     Route::get('/district/get-district', [UserController::class, 'get_district'])->name('get_district');
+    // });
 });
 
 

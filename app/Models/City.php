@@ -21,8 +21,8 @@ class City extends Model
         return $this->belongsTo(Country::class);
     }
 
-    public function users(): HasMany
+    public function customers(): HasMany
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Customer::class);
     }
 }

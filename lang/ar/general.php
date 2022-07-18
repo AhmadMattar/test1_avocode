@@ -3,8 +3,9 @@ return [
     'Location'  => 'الموقع',
     'Countries' => 'الدول',
     'Cities'    => 'المدن',
-    'Districts'  => 'الأحياء',
+    'Districts' => 'الأحياء',
     'Users'     => 'المستخدمون',
+    'Customers' => 'الزبائن',
     'Add'       => 'إضافة',
     'Edit'      => 'تعديل',
     'name'      => 'الاسم',
@@ -21,10 +22,13 @@ return [
     'Add_country'   => 'إضافة دولة',
     'Add_city'      => 'إضافة مدينة',
     'Add_user'      => 'إضافة مستخدم',
+    'Add_customer' => 'إضافة زبون',
+
 
     'Edit_country'  => 'تعديل الدولة',
     'Edit_city'     => 'تعديل المدينة',
     'Edit_user'     => 'تعديل المستخدم',
+    'Edit_customer' => 'تعديل الزبون',
 
     'Delete'    => 'حذف',
     'Active'    => 'تفعيل',

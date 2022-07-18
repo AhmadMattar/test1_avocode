@@ -20,19 +20,4 @@ class User extends Authenticatable
      */
     protected $guarded = [];
 
-    public function country(): BelongsTo
-    {
-        return $this->belongsTo(Country::class);
-    }
-
-    public function city(): BelongsTo
-    {
-        return $this->belongsTo(City::class);
-    }
-
-    public function getCoverAttribute($value)
-    {
-        return url('/') .'/Backend/uploads/users/'.$value;
-    }
-
 }

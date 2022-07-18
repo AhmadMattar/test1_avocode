@@ -21,9 +21,9 @@ class Country extends Model implements TranslatableContract
         return $this->hasMany(City::class);
     }
 
-    public function users(): HasMany
+    public function customers(): HasMany
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Customer::class);
     }
     public function getCoverAttribute($value)
     {

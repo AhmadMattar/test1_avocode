@@ -5,6 +5,7 @@ return [
     'Cities'    => 'Cities',
     'Districts'  => 'Districts',
     'Users'     => 'Users',
+    'Customers'     => 'Customers',
     'Add'       => 'Add',
     'Edit'      => 'edit',
     'name'      => 'Name',
@@ -21,10 +22,12 @@ return [
     'Add_country' => 'Add country',
     'Add_city' => 'Add city',
     'Add_user' => 'Add user',
+    'Add_customer' => 'Add customer',
 
     'Edit_country' => 'Edit country',
     'Edit_city' => 'Edit city',
     'Edit_user' => 'Edit user',
+    'Edit_customer' => 'Edit customer',
 
     'Delete'    => 'Delete',
     'Active'    => 'Active',

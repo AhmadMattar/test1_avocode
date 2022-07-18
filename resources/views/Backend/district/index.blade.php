@@ -101,7 +101,7 @@
             function populateCities() {
                 let countryIdVal = $('#search_country_id').val() != null ? $('#search_country_id').val() :
                     '{{ old('search_country_id') }}';
-                $.get("{{ route('users.get_cities') }}", {
+                $.get("{{ route('customers.get_cities') }}", {
                     country_id: countryIdVal
                 }, function(data) {
                     $('option', $("#search_city_id")).remove();
@@ -152,7 +152,7 @@
                 $('#status').val($(this).data("status")).trigger('change');
 
 
-                $.get("{{ route('users.get_cities') }}", {
+                $.get("{{ route('customers.get_cities') }}", {
                     country_id: country_id
                 }, function(data) {
                     $('option', $("#edit_city_id")).remove();
@@ -172,7 +172,7 @@
                 function populateCities() {
                     let countryIdVal = $('#edit_country_id').val() != null ? $('#edit_country_id').val() :
                         '{{ old('country_id') }}';
-                    $.get("{{ route('users.get_cities') }}", {
+                    $.get("{{ route('customers.get_cities') }}", {
                         country_id: countryIdVal
                     }, function(data) {
                         $('option', $("#edit_city_id")).remove();
@@ -200,7 +200,7 @@
         function populateCities() {
             let countryIdVal = $('#country_id').val() != null ? $('#country_id').val() :
                 '{{ old('country_id') }}';
-            $.get("{{ route('users.get_cities') }}", {
+            $.get("{{ route('customers.get_cities') }}", {
                 country_id: countryIdVal
             }, function(data) {
                 $('option', $("#city_id")).remove();
