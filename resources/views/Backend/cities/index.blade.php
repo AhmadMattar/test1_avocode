@@ -31,7 +31,7 @@
                     <th>{{ __('general.name') }}</th>
                     <th>{{__('general.country')}}</th>
                     <th>{{__('general.Status')}}</th>
-                    <th>Action</th>
+                    <th>{{__('general.Action')}}</th>
                 </tr>
             </thead>
 

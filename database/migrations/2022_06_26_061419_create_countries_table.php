@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->string('cover');
-            $table->boolean('status')->default(false);
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

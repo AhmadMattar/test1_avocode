@@ -19,10 +19,11 @@ return new class extends Migration
             $table->string('last_name');
             $table->foreignId('country_id')->constrained()->cascadeOnDelete();
             $table->foreignId('city_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('district_id')->constrained()->cascadeOnDelete();
             $table->string('email');
             $table->string('phone')->unique();
             $table->string('cover')->nullable();
-            $table->boolean('status')->default(false);
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

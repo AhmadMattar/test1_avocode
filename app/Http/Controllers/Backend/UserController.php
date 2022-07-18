@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Models\City;
 use App\Models\User;
 use App\Models\Country;
+use App\Models\District;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
@@ -43,6 +44,11 @@ class UserController extends Controller
             if (request()->has('city_id')) {
                 $query->when(request()->city_id != null, function ($query) {
                     $query->whereCityId(request()->city_id);
+                });
+            }
+            if (request()->has('district_id')) {
+                $query->when(request()->district_id != null, function ($query) {
+                    $query->whereCityId(request()->district_id);
                 });
             }
             if (request()->has('status')) {
@@ -102,6 +108,7 @@ class UserController extends Controller
             'phone'             => 'required|numeric',
             'country_id'        => 'required',
             'city_id'           => 'required',
+            'district_id'       => 'required',
             'cover'             => 'required',
         ];
         $request->validate($rules);
@@ -112,6 +119,7 @@ class UserController extends Controller
         $data['phone'] = $request->phone;
         $data['country_id'] = $request->country_id;
         $data['city_id'] = $request->city_id;
+        $data['district_id'] = $request->district_id;
         $data['status'] = $request->status;
 
         if($request->file('cover'))
@@ -199,6 +207,13 @@ class UserController extends Controller
         $cities = City::whereCountryId($request->country_id)->get()->toArray();
 
         return response()->json($cities);
+    }
+
+    public function get_district(Request $request)
+    {
+        $districts = District::whereCityId($request->city_id)->get()->toArray();
+
+        return response()->json($districts);
     }
 
     public function deleteAll(Request $request)

@@ -3,6 +3,7 @@ return [
     'Location'  => 'Location',
     'Countries' => 'Countries',
     'Cities'    => 'Cities',
+    'Districts'  => 'Districts',
     'Users'     => 'Users',
     'Add'       => 'Add',
     'Edit'      => 'edit',
@@ -15,6 +16,7 @@ return [
     'phone'     => 'Phone number',
     'country'   => 'Country',
     'city'      => 'City',
+    'District'  => 'District',
 
     'Add_country' => 'Add country',
     'Add_city' => 'Add city',
@@ -43,11 +45,14 @@ return [
 
     'select_country'    => 'Select country',
     'select_city'    => 'Select city',
+    'select_district'   => 'Select district',
 
     'add_successfully'  => 'Created successfully',
     'updated_successfully' => 'Updated successfully',
     'active_successfully' => 'Activated successfully',
     'disactive_successfully' => 'Disactivated successfully',
     'delete_successfully' => 'Deleted successfully',
+
+    'Action'    => 'Action',
 ];
 

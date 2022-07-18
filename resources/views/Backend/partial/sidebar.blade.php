@@ -21,6 +21,9 @@
                     <li class="{{request()->routeIs('cities.index') ? 'active' : ''}}">
                         <a href="{{route('cities.index')}}"> {{__('general.Cities')}} </a>
                     </li>
+                    <li class="{{request()->routeIs('district.index') ? 'active' : ''}}">
+                        <a href="{{route('district.index')}}"> {{__('general.Districts')}} </a>
+                    </li>
                 </ul>
 
                 <a href="#dashboard1" data-active="true" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">

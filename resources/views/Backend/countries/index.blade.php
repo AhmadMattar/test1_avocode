@@ -32,7 +32,7 @@
                     <th>{{ __('general.code') }}</th>
                     <th>{{__('general.Status')}}</th>
                     <th>{{ __('general.photo') }}</th>
-                    <th>Action</th>
+                    <th>{{__('general.Action')}}</th>
                 </tr>
             </thead>
 

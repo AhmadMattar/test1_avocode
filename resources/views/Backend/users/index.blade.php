@@ -33,9 +33,9 @@
                     <th>{{ __('general.phone') }}</th>
                     <th>{{ __('general.country') }}</th>
                     <th>{{ __('general.city') }}</th>
-                    <th>{{__('general.Status')}}</th>
+                    <th>{{ __('general.Status') }}</th>
                     <th>{{ __('general.photo') }}</th>
-                    <th>Action</th>
+                    <th>{{ __('general.Action') }}</th>
                 </tr>
             </thead>
 
@@ -122,6 +122,11 @@
                 populateCities();
             });
 
+            $("#search_city_id").change(function() {
+                populateDistrict();
+                return false;
+            });
+
             function populateCities() {
                 let countryIdVal = $('#search_country_id').val() != null ? $('#search_country_id').val() :
                     '{{ old('search_country_id') }}';
@@ -129,9 +134,11 @@
                     country_id: countryIdVal
                 }, function(data) {
                     $('option', $("#search_city_id")).remove();
-                    $("#search_city_id").append($('<option></option>').val('').html('{{__('general.select_city')}}'));
+                    $("#search_city_id").append($('<option></option>').val('').html(
+                        '{{ __('general.select_city') }}'));
                     $.each(data, function(val, text) {
-                        let selectedVal = text.id == '{{ old('search_city_id') }}' ? "selected" : "";
+                        let selectedVal = text.id == '{{ old('search_city_id') }}' ? "selected" :
+                            "";
                         $("#search_city_id").append($('<option ' + selectedVal + '></option>').val(
                             text
                             .id).html(text.name));
@@ -139,11 +146,29 @@
                 }, "json");
             }
 
-            $('#search').on('click', function(){
+            function populateDistrict() {
+                let cityIdVal = $('#search_city_id').val() != null ? $('#search_city_id').val() :
+                    '{{ old('search_city_id') }}';
+                $.get("{{ route('users.get_district') }}", {
+                    city_id: cityIdVal
+                }, function(data) {
+                    $('option', $("#search_district_id")).remove();
+                    $("#search_district_id").append($('<option></option>').val('').html(
+                        ' {{ __('general.select_district') }} '));
+                    $.each(data, function(val, text) {
+                        let selectedVal = text.id == '{{ old('search_district_id') }}' ? "selected" :
+                        "";
+                        $("#search_district_id").append($('<option ' + selectedVal + '></option>').val(text
+                            .id).html(text.name));
+                    });
+                }, "json");
+            }
+
+            $('#search').on('click', function() {
                 $('#dataTable').DataTable().draw();
             });
 
-            $('#reset').on('click', function(){
+            $('#reset').on('click', function() {
                 $('#searchFirstName').val('');
                 $('#searchLastName').val('');
                 $('#search_country_id').val('');
@@ -155,10 +180,15 @@
             });
         });
     </script>
-    {{-- select country and city --}}
+    {{-- select country and city and district --}}
     <script>
         $("#country_id").change(function() {
             populateCities();
+            return false;
+        });
+
+        $("#city_id").change(function() {
+            populateDistrict();
             return false;
         });
 
@@ -169,10 +199,27 @@
                 country_id: countryIdVal
             }, function(data) {
                 $('option', $("#city_id")).remove();
-                $("#city_id").append($('<option></option>').val('').html(' {{__('general.select_city')}} '));
+                $("#city_id").append($('<option></option>').val('').html(' {{ __('general.select_city') }} '));
                 $.each(data, function(val, text) {
                     let selectedVal = text.id == '{{ old('city_id') }}' ? "selected" : "";
                     $("#city_id").append($('<option ' + selectedVal + '></option>').val(text
+                        .id).html(text.name));
+                });
+            }, "json");
+        }
+
+        function populateDistrict() {
+            let cityIdVal = $('#city_id').val() != null ? $('#city_id').val() :
+                '{{ old('city_id') }}';
+            $.get("{{ route('users.get_district') }}", {
+                city_id: cityIdVal
+            }, function(data) {
+                $('option', $("#district_id")).remove();
+                $("#district_id").append($('<option></option>').val('').html(
+                    ' {{ __('general.select_district') }} '));
+                $.each(data, function(val, text) {
+                    let selectedVal = text.id == '{{ old('district_id') }}' ? "selected" : "";
+                    $("#district_id").append($('<option ' + selectedVal + '></option>').val(text
                         .id).html(text.name));
                 });
             }, "json");
@@ -227,7 +274,8 @@
                         country_id: countryIdVal
                     }, function(data) {
                         $('option', $("#edit_city_id")).remove();
-                        $("#edit_city_id").append($('<option></option>').val('').html(' --- '));
+                        $("#edit_city_id").append($('<option></option>').val('').html(
+                            ' {{ __('general.select_city') }} '));
                         $.each(data, function(val, text) {
                             let selectedVal = text.id == '{{ old('city_id') }}' ?
                                 "selected" : "";

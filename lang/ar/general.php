@@ -3,6 +3,7 @@ return [
     'Location'  => 'الموقع',
     'Countries' => 'الدول',
     'Cities'    => 'المدن',
+    'Districts'  => 'الأحياء',
     'Users'     => 'المستخدمون',
     'Add'       => 'إضافة',
     'Edit'      => 'تعديل',
@@ -15,6 +16,7 @@ return [
     'phone'     => 'رقم الهاتف',
     'country'   => 'الدولة',
     'city'      => 'المدينة',
+    'District'  => 'الحي',
 
     'Add_country'   => 'إضافة دولة',
     'Add_city'      => 'إضافة مدينة',
@@ -42,11 +44,14 @@ return [
 
     'select_country'    => 'اختر دولة',
     'select_city'    => 'اختر مدينة',
+    'select_district'   => 'اختر حي',
 
     'add_successfully'  => 'تمت الإضافة بنجاح',
     'updated_successfully' => 'تم التعديل بنجاح',
     'active_successfully' => 'تم التفعيل بنجاح',
     'disactive_successfully' => 'تم إالغاء التفعيل بنجاح',
     'delete_successfully' => 'تم الحذف بنجاح',
+
+    'Action'    => 'العمليات',
 ];
 
