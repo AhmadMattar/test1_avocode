@@ -21,13 +21,13 @@ return [
 
     'Add_country'   => 'إضافة دولة',
     'Add_city'      => 'إضافة مدينة',
-    'Add_user'      => 'إضافة مستخدم',
+    'Add_user'      => 'إضافة مشرف',
     'Add_customer' => 'إضافة زبون',
 
 
     'Edit_country'  => 'تعديل الدولة',
     'Edit_city'     => 'تعديل المدينة',
-    'Edit_user'     => 'تعديل المستخدم',
+    'Edit_user'     => 'تعديل المشرف',
     'Edit_customer' => 'تعديل الزبون',
 
     'Delete'    => 'حذف',
@@ -57,5 +57,11 @@ return [
     'delete_successfully' => 'تم الحذف بنجاح',
 
     'Action'    => 'العمليات',
+
+    'Admins_Sypervisors' => 'المدراء والمشرفين',
+    'select_permissions' => 'اختر الصلاحيات',
+    'password' => 'كلمة السر',
+
+    'Logout' => 'تسجيل خروج',
 ];
 

@@ -2,42 +2,12 @@
     <div class="row">
         <div class="col-3">
             <div class="form-group">
-                <input type="text" name="first_name" class="form-control" id="searchFirstName" placeholder="{{__('general.first_name')}}">
+                <input type="text" name="name" class="form-control" id="searchName" placeholder="{{__('general.name')}}">
             </div>
         </div>
-        <div class="col-3">
-            <div class="form-group">
-                <input type="text" name="last_name" class="form-control" id="searchLastName" placeholder="{{__('general.last_name')}}">
-            </div>
-        </div>
-        <div class="col-2">
-            <select name="country_id" class="form-control" id="search_country_id">
-                <option value="">{{__('general.select_country')}}</option>
-                @foreach ($countries as $country)
-                    <option value="{{ $country->id }}"
-                        {{ old('search_country_id') == $country->id ? 'selected' : null }}>
-                        {{ $country->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-2">
-            <select name="city_id" id="search_city_id" class="form-control"></select>
-            <span class="text-danger error-text" id="city_id_error"></span>
-        </div>
-        <div class="col-2">
-            <select name="district_id" id="search_district_id" class="form-control"></select>
-            <span class="text-danger error-text" id="district_id_error"></span>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-3">
             <div class="form-group">
                 <input type="text" name="email" class="form-control" id="searchEmail" placeholder="{{__('general.email')}}">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="form-group">
-                <input type="text" name="phone" class="form-control" id="searchPhone" placeholder="{{__('general.phone')}}">
             </div>
         </div>
         <div class="col-3">

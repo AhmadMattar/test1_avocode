@@ -21,12 +21,12 @@ return [
 
     'Add_country' => 'Add country',
     'Add_city' => 'Add city',
-    'Add_user' => 'Add user',
+    'Add_user' => 'Add supervisor',
     'Add_customer' => 'Add customer',
 
     'Edit_country' => 'Edit country',
     'Edit_city' => 'Edit city',
-    'Edit_user' => 'Edit user',
+    'Edit_user' => 'Edit supervisor',
     'Edit_customer' => 'Edit customer',
 
     'Delete'    => 'Delete',
@@ -57,5 +57,12 @@ return [
     'delete_successfully' => 'Deleted successfully',
 
     'Action'    => 'Action',
+
+    'Admins_Sypervisors' => 'Admins',
+
+    'select_permissions' => 'Select permissions',
+    'password' => 'Password',
+
+    'Logout' => 'Logout',
 ];
 

@@ -1,21 +1,30 @@
 @extends('Backend.layouts.master')
 @section('content')
     <div class="mt-10">
-        <a class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addModal">
-            {{ __('general.Add') }}
-        </a>
+        @canany(['create_customer', 'admin_permission'])
+            <a class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addModal">
+                {{ __('general.Add') }}
+            </a>
+        @endcanany
 
-        <button class="btn btn-danger" id="multi_delete">
-            {{ __('general.Delete') }}
-        </button>
+        @canany(['delete_customer', 'admin_permission'])
+            <button class="btn btn-danger" id="multi_delete">
+                {{ __('general.Delete') }}
+            </button>
+        @endcanany
 
-        <button class="btn btn-success" id="active_button">
-            {{ __('general.Active') }}
-        </button>
+        @canany(['active_customer', 'admin_permission'])
+            <button class="btn btn-success" id="active_button">
+                {{ __('general.Active') }}
+            </button>
+        @endcanany
 
-        <button class="btn btn-dark" id="disactive_button">
-            {{ __('general.Disactive') }}
-        </button>
+        @canany(['disactive_customer', 'admin_permission'])
+            <button class="btn btn-dark" id="disactive_button">
+                {{ __('general.Disactive') }}
+            </button>
+        @endcanany
+
         @include('Backend.customers.create')
         @include('Backend.customers.edit')
     </div>
@@ -120,6 +129,8 @@
 
             $("#search_country_id").change(function() {
                 populateCities();
+                populateDistrict();
+                return false;
             });
 
             $("#search_city_id").change(function() {
@@ -149,17 +160,19 @@
             function populateDistrict() {
                 let cityIdVal = $('#search_city_id').val() != null ? $('#search_city_id').val() :
                     '{{ old('search_city_id') }}';
-                $.get("{{ route('customers.get_district') }}", {
+                $.get("{{ route('customers.get_districts') }}", {
                     city_id: cityIdVal
                 }, function(data) {
                     $('option', $("#search_district_id")).remove();
                     $("#search_district_id").append($('<option></option>').val('').html(
                         ' {{ __('general.select_district') }} '));
                     $.each(data, function(val, text) {
-                        let selectedVal = text.id == '{{ old('search_district_id') }}' ? "selected" :
-                        "";
-                        $("#search_district_id").append($('<option ' + selectedVal + '></option>').val(text
-                            .id).html(text.name));
+                        let selectedVal = text.id == '{{ old('search_district_id') }}' ?
+                            "selected" :
+                            "";
+                        $("#search_district_id").append($('<option ' + selectedVal + '></option>')
+                            .val(text
+                                .id).html(text.name));
                     });
                 }, "json");
             }
@@ -173,6 +186,7 @@
                 $('#searchLastName').val('');
                 $('#search_country_id').val('');
                 $('#search_city_id').val('');
+                $('#search_district_id').val('');
                 $('#searchEmail').val('');
                 $('#searchPhone').val('');
                 $('#searchStatus').val('');
@@ -184,6 +198,7 @@
     <script>
         $("#country_id").change(function() {
             populateCities();
+            populateDistrict();
             return false;
         });
 
@@ -211,7 +226,7 @@
         function populateDistrict() {
             let cityIdVal = $('#city_id').val() != null ? $('#city_id').val() :
                 '{{ old('city_id') }}';
-            $.get("{{ route('customers.get_district') }}", {
+            $.get("{{ route('customers.get_districts') }}", {
                 city_id: cityIdVal
             }, function(data) {
                 $('option', $("#district_id")).remove();
@@ -230,7 +245,7 @@
         $(function() {
             $(document).on('click', '#editBtn', function(event) {
                 var data = $(this).data();
-
+                console.log(data);
                 var id = $(this).data("id");
                 var first_name = $(this).data("first_name");
                 var last_name = $(this).data("last_name");
@@ -238,8 +253,10 @@
                 var phone = $(this).data("phone");
                 var country_id = $(this).data("country_id");
                 var city_id = $(this).data("city_id");
-                var city_name = $(this).data("city_name");
+                var district_id = $(this).data("district_id");
                 var cover = $(this).data("cover");
+
+                // console.log(district_id);
 
                 $('#editModal').modal('show');
                 $('#customer_id').attr("value", id);
@@ -256,14 +273,28 @@
                     $('option', $("#edit_city_id")).remove();
                     $.each(data, function(val, text) {
                         let selectedVal = text.id == city_id ? "selected" : "";
-                        $("#edit_city_id").append($('<option ' + selectedVal + '></option>')
-                            .val(text
-                                .id).html(text.name));
+                        $("#edit_city_id").append($('<option ' + selectedVal + '></option>').val(text.id).html(text.name));
+                    });
+                }, "json");
+
+                $.get("{{ route('customers.get_districts') }}", {
+                    city_id: city_id
+                }, function(data) {
+                    $('option', $("#edit_district_id")).remove();
+                    $.each(data, function(val, text) {
+                        let selectedVal = text.id == district_id ? "selected" : "";
+                        $("#edit_district_id").append($('<option ' + selectedVal +'></option>').val(text.id).html(text.name));
                     });
                 }, "json");
 
                 $("#edit_country_id").change(function() {
                     populateCities();
+                    populateDistrict();
+                    return false;
+                });
+
+                $("#edit_city_id").change(function() {
+                    populateDistrict();
                     return false;
                 });
 
@@ -280,6 +311,25 @@
                             let selectedVal = text.id == '{{ old('city_id') }}' ?
                                 "selected" : "";
                             $("#edit_city_id").append($('<option ' + selectedVal +
+                                '></option>').val(text
+                                .id).html(text.name));
+                        });
+                    }, "json");
+                }
+
+                function populateDistrict() {
+                    let cityIdVal = $('#edit_city_id').val() != null ? $('#edit_city_id').val() :
+                        '{{ old('city_id') }}';
+                    $.get("{{ route('customers.get_districts') }}", {
+                        city_id: cityIdVal
+                    }, function(data) {
+                        $('option', $("#edit_district_id")).remove();
+                        $("#edit_district_id").append($('<option></option>').val('').html(
+                            ' {{ __('general.select_district') }} '));
+                        $.each(data, function(val, text) {
+                            let selectedVal = text.id == '{{ old('district_id') }}' ?
+                                "selected" : "";
+                            $("#edit_district_id").append($('<option ' + selectedVal +
                                 '></option>').val(text
                                 .id).html(text.name));
                         });

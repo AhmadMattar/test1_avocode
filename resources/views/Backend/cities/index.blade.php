@@ -1,22 +1,31 @@
 @extends('Backend.layouts.master')
 @section('content')
     <div class="mt-10">
-        <a class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addModal"
-            data-countries="{{ $countries }}">
-            {{ __('general.Add') }}
-        </a>
+        @canany(['create_city', 'admin_permission'])
+            <a class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addModal"
+                data-countries="{{ $countries }}">
+                {{ __('general.Add') }}
+            </a>
+        @endcanany
 
-        <button class="btn btn-danger" id="multi_delete">
-            {{ __('general.Delete') }}
-        </button>
+        @canany(['delete_city', 'admin_permission'])
+            <button class="btn btn-danger" id="multi_delete">
+                {{ __('general.Delete') }}
+            </button>
+        @endcanany
 
-        <button class="btn btn-success" id="active_button">
-            {{ __('general.Active') }}
-        </button>
+        @canany(['active_city', 'admin_permission'])
+            <button class="btn btn-success" id="active_button">
+                {{ __('general.Active') }}
+            </button>
+        @endcanany
 
-        <button class="btn btn-dark" id="disactive_button">
-            {{ __('general.Disactive') }}
-        </button>
+        @canany(['disactive_city', 'admin_permission'])
+            <button class="btn btn-dark" id="disactive_button">
+                {{ __('general.Disactive') }}
+            </button>
+        @endcanany
+
         @include('Backend.cities.create')
         @include('Backend.cities.edit')
     </div>
@@ -29,9 +38,9 @@
                         <input type="checkbox" id="selectAll">
                     </th>
                     <th>{{ __('general.name') }}</th>
-                    <th>{{__('general.country')}}</th>
-                    <th>{{__('general.Status')}}</th>
-                    <th>{{__('general.Action')}}</th>
+                    <th>{{ __('general.country') }}</th>
+                    <th>{{ __('general.Status') }}</th>
+                    <th>{{ __('general.Action') }}</th>
                 </tr>
             </thead>
 
@@ -49,12 +58,12 @@
                 searching: false,
                 ajax: {
                     url: '{{ route('cities.indexTable') }}',
-                    data: function (data) {
-                            data.name = $('#searchName').val();
-                            data.country_id = $('#searchCountry').val(),
+                    data: function(data) {
+                        data.name = $('#searchName').val();
+                        data.country_id = $('#searchCountry').val(),
                             data.status = $('#searchStatus').val(),
                             data.search = $('input[type="search"]').val()
-                        }
+                    }
                 },
                 columns: [{
                         data: 'checkbox',
@@ -86,11 +95,11 @@
                     }
                 ]
             });
-            $('#search').on('click', function(){
+            $('#search').on('click', function() {
                 $('#dataTable').DataTable().draw();
             });
 
-            $('#reset').on('click', function(){
+            $('#reset').on('click', function() {
                 $('#searchName').val('');
                 $('#searchCountry').val('');
                 $('#searchStatus').val('');
@@ -103,7 +112,7 @@
     <script>
         $(document).on('click', '#editBtn', function(event) {
             var data = $(this).data();
-
+            console.log(data);
             var city_id = $(this).data("id");
             var country_id = $(this).data("country_id");
             var name_en = $(this).data("name_en");

@@ -32,7 +32,7 @@
                         <span class="text-danger error-text" id="phone_error"></span>
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="form-group">
                                 <label for="edit_country_id">{{__('general.country')}}</label>
                                 <select name="country_id" class="form-control" id="edit_country_id">
@@ -46,10 +46,15 @@
                                 <span class="text-danger error-text" id="country_id_error"></span>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <label for="edit_city_id">{{__('general.city')}}</label>
                             <select name="city_id" id="edit_city_id" class="form-control"></select>
                             <span class="text-danger error-text" id="city_id_error"></span>
+                        </div>
+                        <div class="col-4">
+                            <label for="edit_district_id">{{__('general.District')}}</label>
+                            <select name="district_id" id="edit_district_id" class="form-control"></select>
+                            <span class="text-danger error-text" id="district_id_error"></span>
                         </div>
                     </div>
                     <div class="form-group">

@@ -10,14 +10,9 @@
                 <form class="mr-2" id="add" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <Label for="first_name">{{ __('general.first_name') }}</Label>
-                        <input type="text" name="first_name" class="form-control">
-                        <span class="text-danger error-text" id="first_name_error"></span>
-                    </div>
-                    <div class="form-group">
-                        <Label for="last_name">{{ __('general.last_name') }}</Label>
-                        <input type="text" name="last_name" class="form-control">
-                        <span class="text-danger error-text" id="last_name_error"></span>
+                        <Label for="name">{{ __('general.name') }}</Label>
+                        <input type="text" name="name" class="form-control">
+                        <span class="text-danger error-text" id="name_error"></span>
                     </div>
                     <div class="form-group">
                         <Label for="email">{{ __('general.email') }}</Label>
@@ -25,36 +20,42 @@
                         <span class="text-danger error-text" id="email_error"></span>
                     </div>
                     <div class="form-group">
-                        <Label for="phone">{{ __('general.phone') }}</Label>
-                        <input type="text" name="phone" class="form-control">
-                        <span class="text-danger error-text" id="phone_error"></span>
+                        <label for="password">{{__('general.password')}}</label>
+                        <input type="text" name="password" value="{{old('password')}}" class="form-control">
+                        <span class="text-danger error-text" id="password_error"></span>
                     </div>
                     <div class="row">
-                        <div class="col-4">
                             <div class="form-group">
-                                <label for="country_id">{{__('general.country')}}</label>
-                                <select name="country_id" class="form-control" id="country_id">
-                                    <option value="">{{__('general.select_country')}}</option>
-                                    @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}"
-                                            {{ old('country_id') == $country->id ? 'selected' : null }}>
-                                            {{ $country->name }}</option>
-                                    @endforeach
+                                <label for="permission">{{__('general.select_permissions')}}</label>
+                                <select name="permission[]" class="form-control" id="permission" multiple>
+                                    <option value="">---</option>
+                                    <option value="1">@lang('permissions.admin_permission')</option>
+                                    <option value="2">@lang('permissions.create_country')</option>
+                                    <option value="3">@lang('permissions.edit_country')</option>
+                                    <option value="4">@lang('permissions.delete_Country')</option>
+                                    <option value="14">@lang('permissions.active_country')</option>
+                                    <option value="15">@lang('permissions.disactive_country')</option>
+
+                                    <option value="7">@lang('permissions.create_city')</option>
+                                    <option value="6">@lang('permissions.edit_city')</option>
+                                    <option value="8">@lang('permissions.delete_city')</option>
+                                    <option value="12">@lang('permissions.active_city')</option>
+                                    <option value="13">@lang('permissions.disactive_city')</option>
+
+                                    <option value="9">@lang('permissions.create_district')</option>
+                                    <option value="10">@lang('permissions.edit_district')</option>
+                                    <option value="11">@lang('permissions.delete_district')</option>
+                                    <option value="16">@lang('permissions.active_district')</option>
+                                    <option value="17">@lang('permissions.disactive_district')</option>
+
+                                    <option value="18">@lang('permissions.create_customer')</option>
+                                    <option value="19">@lang('permissions.edit_customer')</option>
+                                    <option value="20">@lang('permissions.delete_customer')</option>
+                                    <option value="21">@lang('permissions.active_customer')</option>
+                                    <option value="22">@lang('permissions.disactive_customer')</option>
                                 </select>
-                                <span class="text-danger error-text" id="country_id_error"></span>
+                                <span class="text-danger error-text" id="permission_error"></span>
                             </div>
-                        </div>
-                        <div class="col-4">
-                            <label for="city_id">{{__('general.city')}}</label>
-                            <select name="city_id" id="city_id" class="form-control"></select>
-                            <span class="text-danger error-text" id="city_id_error"></span>
-                        </div>
-                        
-                        <div class="col-4">
-                            <label for="district_id">{{__('general.District')}}</label>
-                            <select name="district_id" id="district_id" class="form-control"></select>
-                            <span class="text-danger error-text" id="district_id_error"></span>
-                        </div>
                     </div>
                     <div class="form-group">
                         <label for="status">{{__('general.Status')}}</label>
@@ -62,16 +63,6 @@
                             <option value="1" {{old('status') == 1 ? 'selected' : null}}>{{__('general.Active')}}</option>
                             <option value="0" {{old('status') == 0 ? 'selected' : null}}>{{__('general.Disactive')}}</option>
                         </select>
-                    </div>
-                    <div class="row pt-4">
-                        <div class="col-12">
-                            <label for="cover">{{ __('general.photo') }}</label>
-                            <br>
-                            <div class="file-loading">
-                                <input type="file" name="cover" id="Image" class="file-input-overview">
-                                <span class="text-danger error-text" id="cover_error"></span>
-                            </div>
-                        </div>
                     </div>
                     <div class="form-group pt-4">
                         <button type="submit" name="submit" class="btn btn-primary">{{__('general.Add')}}</button>

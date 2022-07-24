@@ -6,6 +6,7 @@ use App\Models\City;
 use App\Models\Country;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class CityController extends Controller
@@ -62,10 +63,15 @@ class CityController extends Controller
             foreach(config('app.langauges') as $key => $value ){
                 $actionBtn .= "data-name_$key = ". $row->translate($key)->name ." ";
             }
-            $actionBtn .= '>
-                <i class="fa fa-edit"></i>
-            </button>
-            <a id="deleteBtn" data-id="' . $row->id . '" class="deleteCity btn btn-danger btn-sm"  data-toggle="modal" data-target="#deletemodal"><i class="fa fa-trash"></i></a>';
+            if (Auth::user()->can('edit_city') || Auth::user()->can('admin_permission')) {
+                $actionBtn .= '>
+                            <i class="fa fa-edit"></i>';
+            }
+            if (Auth::user()->can('delete_city') || Auth::user()->can('admin_permission')) {
+                $actionBtn .= '
+                            </button>
+                            <a id="deleteBtn" data-id="' . $row->id . '" class="deleteCity btn btn-danger btn-sm"  data-toggle="modal" data-target="#deletemodal"><i class="fa fa-trash"></i></a>';
+            }
             return $actionBtn;
         })
         ->rawColumns(['checkbox', 'action'])->make(true);

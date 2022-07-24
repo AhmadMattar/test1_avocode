@@ -7,6 +7,7 @@ use App\Models\Country;
 use App\Models\District;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class DistrictController extends Controller
@@ -73,10 +74,15 @@ class DistrictController extends Controller
             foreach(config('app.langauges') as $key => $value ){
                 $actionBtn .= "data-name_$key = ". $row->translate($key)->name ." ";
             }
-            $actionBtn .= '>
-                <i class="fa fa-edit"></i>
-            </button>
-            <a id="deleteBtn" data-id="' . $row->id . '" class="deleteCity btn btn-danger btn-sm"  data-toggle="modal" data-target="#deletemodal"><i class="fa fa-trash"></i></a>';
+            if (Auth::user()->can('edit_district') || Auth::user()->can('admin_permission')) {
+                $actionBtn .= '>
+                            <i class="fa fa-edit"></i>';
+            }
+            if (Auth::user()->can('delete_district') || Auth::user()->can('admin_permission')) {
+                $actionBtn .= '
+                            </button>
+                            <a id="deleteBtn" data-id="' . $row->id . '" class="deleteDistrict btn btn-danger btn-sm"  data-toggle="modal" data-target="#deletemodal"><i class="fa fa-trash"></i></a>';
+            }
             return $actionBtn;
         })
         ->rawColumns(['checkbox', 'action'])->make(true);
@@ -100,7 +106,6 @@ class DistrictController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $rules = [
             'country_id' => 'required',
             'city_id'    => 'required',
@@ -132,7 +137,6 @@ class DistrictController extends Controller
      */
     public function update(Request $request)
     {
-        // dd($request->all());
         $district = District::find($request->id);
         $rules = [
             'country_id' => 'required',
@@ -164,7 +168,6 @@ class DistrictController extends Controller
      */
     public function destroy(Request $request)
     {
-        // dd($request->all());
         $city = District::find($request->id);
         $city->delete();
         return response()->json([$city, 'message' => __('general.delete_successfully')]);
@@ -179,7 +182,6 @@ class DistrictController extends Controller
 
     public function deleteAll(Request $request)
     {
-        // dd($request->all());
         $ids = $request->id;
         $cities = District::whereIn('id', $ids);
         $cities->delete();
@@ -188,7 +190,6 @@ class DistrictController extends Controller
 
     public function activeAll(Request $request)
     {
-        // dd($request->all());
         $ids = $request->id;
         $cities = District::whereIn('id', $ids);
         $cities->update([
@@ -199,7 +200,6 @@ class DistrictController extends Controller
 
     public function disactiveAll(Request $request)
     {
-        // dd($request->all());
         $ids = $request->id;
         $cities = District::whereIn('id', $ids);
         $cities->update([

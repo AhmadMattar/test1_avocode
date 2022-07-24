@@ -44,6 +44,7 @@ $('#edit').submit(function (e) {
 
         success: function (data, status) {
             $("#datatable").html(data);
+            $("#edit")[0].reset();
             $("#editModal").modal('hide');
             toastr.success(data.message);
             $('#dataTable').DataTable().draw();

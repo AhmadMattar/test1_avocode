@@ -1,22 +1,31 @@
 @extends('Backend.layouts.master')
 @section('content')
     <div class="mt-10">
-        <a class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addModal"
-            data-countries="{{ $countries }}">
-            {{ __('general.Add') }}
-        </a>
+        @canany(['create_district', 'admin_permission'])
+            <a class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addModal"
+                data-countries="{{ $countries }}">
+                {{ __('general.Add') }}
+            </a>
+        @endcanany
 
-        <button class="btn btn-danger" id="multi_delete">
-            {{ __('general.Delete') }}
-        </button>
+        @canany(['delete_district', 'admin_permission'])
+            <button class="btn btn-danger" id="multi_delete">
+                {{ __('general.Delete') }}
+            </button>
+        @endcanany
 
-        <button class="btn btn-success" id="active_button">
-            {{ __('general.Active') }}
-        </button>
+        @canany(['active_district', 'admin_permission'])
+            <button class="btn btn-success" id="active_button">
+                {{ __('general.Active') }}
+            </button>
+        @endcanany
 
-        <button class="btn btn-dark" id="disactive_button">
-            {{ __('general.Disactive') }}
-        </button>
+        @canany(['disactive_district', 'admin_permission'])
+            <button class="btn btn-dark" id="disactive_button">
+                {{ __('general.Disactive') }}
+            </button>
+        @endcanany
+
         @include('Backend.district.create')
         @include('Backend.district.edit')
     </div>
@@ -49,10 +58,10 @@
                 serverSide: true,
                 searching: false,
                 ajax: {
-                    url: '{{ route('district.indexTable') }}',
+                    url: '{{ route('districts.indexTable') }}',
                     data: function(data) {
-                            data.name = $('#searchName').val();
-                            data.country_id = $('#search_country_id').val(),
+                        data.name = $('#searchName').val();
+                        data.country_id = $('#search_country_id').val(),
                             data.city_id = $('#search_city_id').val(),
                             data.status = $('#searchStatus').val(),
                             data.search = $('input[type="search"]').val()
@@ -101,13 +110,15 @@
             function populateCities() {
                 let countryIdVal = $('#search_country_id').val() != null ? $('#search_country_id').val() :
                     '{{ old('search_country_id') }}';
-                $.get("{{ route('customers.get_cities') }}", {
+                $.get("{{ route('districts.get_cities') }}", {
                     country_id: countryIdVal
                 }, function(data) {
                     $('option', $("#search_city_id")).remove();
-                    $("#search_city_id").append($('<option></option>').val('').html('{{__('general.select_city')}}'));
+                    $("#search_city_id").append($('<option></option>').val('').html(
+                        '{{ __('general.select_city') }}'));
                     $.each(data, function(val, text) {
-                        let selectedVal = text.id == '{{ old('search_city_id') }}' ? "selected" : "";
+                        let selectedVal = text.id == '{{ old('search_city_id') }}' ? "selected" :
+                            "";
                         $("#search_city_id").append($('<option ' + selectedVal + '></option>').val(
                             text
                             .id).html(text.name));
@@ -152,7 +163,7 @@
                 $('#status').val($(this).data("status")).trigger('change');
 
 
-                $.get("{{ route('customers.get_cities') }}", {
+                $.get("{{ route('districts.get_cities') }}", {
                     country_id: country_id
                 }, function(data) {
                     $('option', $("#edit_city_id")).remove();
@@ -172,11 +183,12 @@
                 function populateCities() {
                     let countryIdVal = $('#edit_country_id').val() != null ? $('#edit_country_id').val() :
                         '{{ old('country_id') }}';
-                    $.get("{{ route('customers.get_cities') }}", {
+                    $.get("{{ route('districts.get_cities') }}", {
                         country_id: countryIdVal
                     }, function(data) {
                         $('option', $("#edit_city_id")).remove();
-                        $("#edit_city_id").append($('<option></option>').val('').html('{{__('general.select_city')}}'));
+                        $("#edit_city_id").append($('<option></option>').val('').html(
+                            '{{ __('general.select_city') }}'));
                         $.each(data, function(val, text) {
                             let selectedVal = text.id == '{{ old('city_id') }}' ?
                                 "selected" : "";
@@ -200,7 +212,7 @@
         function populateCities() {
             let countryIdVal = $('#country_id').val() != null ? $('#country_id').val() :
                 '{{ old('country_id') }}';
-            $.get("{{ route('customers.get_cities') }}", {
+            $.get("{{ route('districts.get_cities') }}", {
                 country_id: countryIdVal
             }, function(data) {
                 $('option', $("#city_id")).remove();

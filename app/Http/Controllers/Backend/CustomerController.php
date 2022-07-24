@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\District;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use Yajra\DataTables\Facades\DataTables;
@@ -86,12 +87,19 @@ class CustomerController extends Controller
                             data-phone="'.$row->phone.'"
                             data-country_id="'.$row->country_id.'"
                             data-city_id="'.$row->city_id.'"
-                            data-city_name="'.$row->city->name.'"
+                            data-district_id="'.$row->district_id.'"
                             data-status="'.$row->status.'"
-                            data-cover="'.$row->cover.'" >
-                <i class="fa fa-edit"></i>
-            </button>
-            <a id="deleteBtn" data-id="' . $row->id . '" class="deleteCustomer btn btn-danger btn-sm"  data-toggle="modal" data-target="#deletemodal"><i class="fa fa-trash"></i></a>';
+                            data-cover="'.$row->cover.'" >';
+
+            if (Auth::user()->can('edit_customer') || Auth::user()->can('admin_permission')) {
+                $actionBtn .= '
+                            <i class="fa fa-edit"></i>';
+            }
+            if (Auth::user()->can('delete_customer') || Auth::user()->can('admin_permission')) {
+                $actionBtn .= '
+                            </button>
+                            <a id="deleteBtn" data-id="' . $row->id . '" class="deleteCustomer btn btn-danger btn-sm"  data-toggle="modal" data-target="#deletemodal"><i class="fa fa-trash"></i></a>';
+            }
             return $actionBtn;
         })
         ->rawColumns(['checkbox', 'cover', 'action', 'country', 'city'])->make(true);
@@ -100,7 +108,6 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $rules = [
             'first_name'        => 'required',
             'last_name'         => 'required',
@@ -144,7 +151,6 @@ class CustomerController extends Controller
      */
     public function update(Request $request)
     {
-        // dd($request->all());
         $customer = Customer::find($request->id);
 
         $rules = [
@@ -154,6 +160,7 @@ class CustomerController extends Controller
             'phone'             => 'required|numeric',
             'country_id'        => 'required',
             'city_id'           => 'required',
+            'district_id'       => 'required',
             'cover'             => 'nullable',
         ];
         $request->validate($rules);
@@ -164,6 +171,7 @@ class CustomerController extends Controller
         $data['phone'] = $request->phone;
         $data['country_id'] = $request->country_id;
         $data['city_id'] = $request->city_id;
+        $data['district_id'] = $request->district_id;
         $data['status'] = $request->status;
 
         if($request->file('cover'))
@@ -209,7 +217,7 @@ class CustomerController extends Controller
         return response()->json($cities);
     }
 
-    public function get_district(Request $request)
+    public function get_districts(Request $request)
     {
         $districts = District::whereCityId($request->city_id)->get()->toArray();
 
@@ -220,6 +228,13 @@ class CustomerController extends Controller
     {
         $ids = $request->id;
         $customers = Customer::whereIn('id', $ids);
+        for($i = 0; $i < count($ids); $i++){
+            $customer = Customer::findOrFail($ids[$i]);
+            $image_name = explode("/",$customer->cover)[6];
+            if(File::exists('Backend/uploads/users/'. $image_name)){
+                unlink('Backend/uploads/users/'. $image_name);
+            }
+        }
         $customers->delete();
         return response()->json([$customers, 'message' => __('general.delete_successfully')]);
     }

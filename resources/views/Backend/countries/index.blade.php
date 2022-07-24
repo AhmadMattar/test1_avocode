@@ -1,20 +1,30 @@
 @extends('Backend.layouts.master')
 @section('content')
     <div class="mt-10">
-        <a class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addModal">
-            {{ __('general.Add') }}
-        </a>
-        <button class="btn btn-danger" id="multi_delete">
-            {{ __('general.Delete') }}
-        </button>
+        @canany(['create_country', 'admin_permission'])
+            <a class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addModal">
+                {{ __('general.Add') }}
+            </a>
+        @endcanany
 
-        <button class="btn btn-success" id="active_button">
-            {{ __('general.Active') }}
-        </button>
+        @canany(['delete_country', 'admin_permission'])
+            <button class="btn btn-danger" id="multi_delete">
+                {{ __('general.Delete') }}
+            </button>
+        @endcanany
 
-        <button class="btn btn-dark" id="disactive_button">
-            {{ __('general.Disactive') }}
-        </button>
+        @canany(['active_country', 'admin_permission'])
+            <button class="btn btn-success" id="active_button">
+                {{ __('general.Active') }}
+            </button>
+        @endcanany
+
+        @canany(['disactive_country', 'admin_permission'])
+            <button class="btn btn-dark" id="disactive_button">
+                {{ __('general.Disactive') }}
+            </button>
+        @endcanany
+
         @include('Backend.countries.create')
         @include('Backend.countries.edit')
 
@@ -30,9 +40,9 @@
                     </th>
                     <th>{{ __('general.name') }}</th>
                     <th>{{ __('general.code') }}</th>
-                    <th>{{__('general.Status')}}</th>
+                    <th>{{ __('general.Status') }}</th>
                     <th>{{ __('general.photo') }}</th>
-                    <th>{{__('general.Action')}}</th>
+                    <th>{{ __('general.Action') }}</th>
                 </tr>
             </thead>
 
@@ -49,12 +59,12 @@
                 searching: false,
                 ajax: {
                     url: '{{ route('countries.indexTable') }}',
-                    data: function (data) {
-                            data.name = $('#searchName').val(),
+                    data: function(data) {
+                        data.name = $('#searchName').val(),
                             data.code = $('#searchCode').val(),
                             data.status = $('#searchStatus').val(),
                             data.search = $('input[type="search"]').val()
-                        }
+                    }
                 },
                 columns: [{
                         data: 'checkbox',
@@ -88,11 +98,11 @@
                     }
                 ]
             });
-            $('#search').on('click', function(){
+            $('#search').on('click', function() {
                 $('#dataTable').DataTable().draw();
             });
 
-            $('#reset').on('click', function(){
+            $('#reset').on('click', function() {
                 $('#searchName').val('');
                 $('#searchCode').val('');
                 $('#searchStatus').val('');

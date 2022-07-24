@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Models\Country;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use Yajra\DataTables\Facades\DataTables;
@@ -62,10 +63,15 @@ class CountryController extends Controller
             foreach(config('app.langauges') as $key => $value ){
                 $actionBtn .= "data-name_$key = ". $row->translate($key)->name ." ";
             }
-            $actionBtn .= '>
-                <i class="fa fa-edit"></i>
-            </button>
-            <a id="deleteBtn" data-id="' . $row->id . '" class="deleteCountry btn btn-danger btn-sm"  data-toggle="modal" data-target="#deletemodal"><i class="fa fa-trash"></i></a>';
+            if (Auth::user()->can('edit_country') || Auth::user()->can('admin_permission')) {
+                $actionBtn .= '>
+                            <i class="fa fa-edit"></i>';
+            }
+            if (Auth::user()->can('delete_country') || Auth::user()->can('admin_permission')) {
+                $actionBtn .= '
+                            </button>
+                            <a id="deleteBtn" data-id="' . $row->id . '" class="deleteCountry btn btn-danger btn-sm"  data-toggle="modal" data-target="#deletemodal"><i class="fa fa-trash"></i></a>';
+            }
             return $actionBtn;
         })
         ->rawColumns(['checkbox', 'cover', 'action'])->make(true);

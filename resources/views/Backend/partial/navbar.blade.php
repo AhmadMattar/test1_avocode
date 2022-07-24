@@ -1,15 +1,14 @@
 <!--  BEGIN NAVBAR  -->
 <div class="header-container fixed-top">
     <header class="header navbar navbar-expand-sm">
-
         <ul class="navbar-item theme-brand flex-row  text-center">
             <li class="nav-item theme-logo">
-                <a href="index.html">
+                <a href="{{route('dashboard.index')}}">
                     <img src="{{asset('Backend/assets/img/90x90.jpg')}}" class="navbar-logo" alt="logo">
                 </a>
             </li>
             <li class="nav-item theme-text">
-                <a href="index.html" class="nav-link"> CORK </a>
+                <a href="{{route('dashboard.index')}}" class="nav-link"> CORK </a>
             </li>
         </ul>
 
@@ -43,6 +42,28 @@
                     </li>
                 @endif
             @endforeach
+        </ul>
+        <ul class="navbar-nav flex-row ml-auto">
+            <li class="nav-item more-dropdown">
+                <div class="dropdown  custom-dropdown-icon">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ Auth::user()->name }}
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                     document.getElementById('logout-form').submit();">
+                            {{__('general.Logout')}}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
+                </div>
+            </li>
         </ul>
     </header>
 </div>
