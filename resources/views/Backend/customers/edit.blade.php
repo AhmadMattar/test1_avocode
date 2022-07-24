@@ -14,22 +14,22 @@
                     <div class="form-group">
                         <Label for="first_name">{{ __('general.first_name') }}</Label>
                         <input type="text" name="first_name" id="first_name" class="form-control">
-                        <span class="text-danger error-text" id="first_name_error"></span>
+                        <span class="text-danger error-text" id="first_name_error2"></span>
                     </div>
                     <div class="form-group">
                         <Label for="last_name">{{ __('general.last_name') }}</Label>
                         <input type="text" name="last_name" id="last_name" class="form-control">
-                        <span class="text-danger error-text" id="last_name_error"></span>
+                        <span class="text-danger error-text" id="last_name_error2"></span>
                     </div>
                     <div class="form-group">
                         <Label for="email">{{ __('general.email') }}</Label>
                         <input type="email" name="email" id="email" class="form-control">
-                        <span class="text-danger error-text" id="email_error"></span>
+                        <span class="text-danger error-text" id="email_error2"></span>
                     </div>
                     <div class="form-group">
                         <Label for="phone">{{ __('general.phone') }}</Label>
                         <input type="text" name="phone" id="phone" class="form-control">
-                        <span class="text-danger error-text" id="phone_error"></span>
+                        <span class="text-danger error-text" id="phone_error2"></span>
                     </div>
                     <div class="row">
                         <div class="col-4">
@@ -43,18 +43,18 @@
                                             {{ $country->name }}</option>
                                     @endforeach
                                 </select>
-                                <span class="text-danger error-text" id="country_id_error"></span>
+                                <span class="text-danger error-text" id="country_id_error2"></span>
                             </div>
                         </div>
                         <div class="col-4">
                             <label for="edit_city_id">{{__('general.city')}}</label>
                             <select name="city_id" id="edit_city_id" class="form-control"></select>
-                            <span class="text-danger error-text" id="city_id_error"></span>
+                            <span class="text-danger error-text" id="city_id_error2"></span>
                         </div>
                         <div class="col-4">
                             <label for="edit_district_id">{{__('general.District')}}</label>
                             <select name="district_id" id="edit_district_id" class="form-control"></select>
-                            <span class="text-danger error-text" id="district_id_error"></span>
+                            <span class="text-danger error-text" id="district_id_error2"></span>
                         </div>
                     </div>
                     <div class="form-group">

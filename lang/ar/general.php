@@ -29,6 +29,7 @@ return [
     'Edit_city'     => 'تعديل المدينة',
     'Edit_user'     => 'تعديل المشرف',
     'Edit_customer' => 'تعديل الزبون',
+    'Edit_district' => 'تعديل الحي',
 
     'Delete'    => 'حذف',
     'Active'    => 'تفعيل',

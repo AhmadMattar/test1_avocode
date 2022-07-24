@@ -35,7 +35,7 @@
                             <option value="{{$country->id}}">{{$country->name}}</option>
                             @endforeach
                         </select>
-                        <span class="text-danger error-text" id="country_id_error"></span>
+                        <span class="text-danger error-text" id="country_id_error2"></span>
                     </div>
 
                     <div class="form-group pt-4">

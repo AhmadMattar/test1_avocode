@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">{{ __('general.Edit_city') }}</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{{ __('general.Edit_district') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -42,13 +42,13 @@
                                             {{ $country->name }}</option>
                                     @endforeach
                                 </select>
-                                <span class="text-danger error-text" id="country_id_error"></span>
+                                <span class="text-danger error-text" id="country_id_error2"></span>
                             </div>
                         </div>
                         <div class="col-6">
                             <label for="edit_city_id">{{ __('general.city') }}</label>
                             <select name="city_id" id="edit_city_id" class="form-control"></select>
-                            <span class="text-danger error-text" id="city_id_error"></span>
+                            <span class="text-danger error-text" id="city_id_error2"></span>
                         </div>
                     </div>
 

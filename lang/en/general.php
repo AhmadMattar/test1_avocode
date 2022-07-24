@@ -28,6 +28,7 @@ return [
     'Edit_city' => 'Edit city',
     'Edit_user' => 'Edit supervisor',
     'Edit_customer' => 'Edit customer',
+    'Edit_district' => 'Edit district',
 
     'Delete'    => 'Delete',
     'Active'    => 'Active',
