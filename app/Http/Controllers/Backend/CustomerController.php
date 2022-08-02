@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -49,7 +50,7 @@ class CustomerController extends Controller
             }
             if (request()->has('district_id')) {
                 $query->when(request()->district_id != null, function ($query) {
-                    $query->whereCityId(request()->district_id);
+                    $query->whereDistrictId(request()->district_id);
                 });
             }
             if (request()->has('status')) {
@@ -66,13 +67,13 @@ class CustomerController extends Controller
         })
         ->addColumn('cover', function ($row) {
             $url = $row->cover;
-            return '<img src="'.$url.'"  width="40" class="img-rounded" align="center" />';
+            return !empty($row->cover) ? '<img src="'.$url.'"  width="40" class="img-rounded" align="center" />' : '<img src="'.asset('Backend/uploads/no-image.jpg').'"  width="40" class="img-rounded" align="center" />';
         })
         ->addColumn('country', function($row){
-            return $row->country->name;
+            return !empty($row->country->name) ? $row->country->name : __('general.not_exist') ;
         })
         ->addColumn('city', function($row){
-            return $row->city->name;
+            return !empty($row->city->name) ? $row->city->name : __('general.not_exist');
         })
         ->addIndexColumn()
         ->addColumn('action', function($row){
@@ -112,6 +113,7 @@ class CustomerController extends Controller
             'first_name'        => 'required',
             'last_name'         => 'required',
             'email'             => 'required|email',
+            'password'          => 'required',
             'phone'             => 'required|numeric',
             'country_id'        => 'required',
             'city_id'           => 'required',
@@ -123,6 +125,7 @@ class CustomerController extends Controller
         $data['first_name'] = $request->first_name;
         $data['last_name'] = $request->last_name;
         $data['email'] = $request->email;
+        $data['password'] = Hash::make($request->password);
         $data['phone'] = $request->phone;
         $data['country_id'] = $request->country_id;
         $data['city_id'] = $request->city_id;
@@ -157,6 +160,7 @@ class CustomerController extends Controller
             'first_name'        => 'required',
             'last_name'         => 'required',
             'email'             => 'required|email',
+            'password'          => 'nullable',
             'phone'             => 'required|numeric',
             'country_id'        => 'required',
             'city_id'           => 'required',
@@ -173,6 +177,10 @@ class CustomerController extends Controller
         $data['city_id'] = $request->city_id;
         $data['district_id'] = $request->district_id;
         $data['status'] = $request->status;
+
+        if (request()->has('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
 
         if($request->file('cover'))
         {

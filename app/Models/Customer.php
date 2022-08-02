@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class Customer extends Model
 {
-    use HasFactory;
+    use HasFactory, HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -16,6 +18,14 @@ class Customer extends Model
      * @var array<int, string>
      */
     protected $guarded = [];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+        'email_verified_at',
+        'created_at',
+        'updated_at',
+    ];
 
     public function country(): BelongsTo
     {
@@ -29,6 +39,6 @@ class Customer extends Model
 
     public function getCoverAttribute($value)
     {
-        return url('/') .'/Backend/uploads/users/'.$value;
+        return $value ? url('/') .'/Backend/uploads/users/'.$value : null;
     }
 }

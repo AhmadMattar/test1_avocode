@@ -181,8 +181,7 @@
                 });
 
                 function populateCities() {
-                    let countryIdVal = $('#edit_country_id').val() != null ? $('#edit_country_id').val() :
-                        '{{ old('country_id') }}';
+                    let countryIdVal = $('#edit_country_id').val();
                     $.get("{{ route('districts.get_cities') }}", {
                         country_id: countryIdVal
                     }, function(data) {

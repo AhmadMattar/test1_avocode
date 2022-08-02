@@ -13,7 +13,7 @@ class City extends Model
     use HasFactory, Translatable;
 
     protected $guarded = [];
-    protected $hidden = ['translations'];
+    protected $hidden = ['translations', 'created_at', 'updated_at'];
     public $translatedAttributes = ['name'];
 
     public function country(): BelongsTo
@@ -24,5 +24,10 @@ class City extends Model
     public function customers(): HasMany
     {
         return $this->hasMany(Customer::class);
+    }
+
+    public function districts(): HasMany
+    {
+        return $this->hasMany(District::class);
     }
 }

@@ -13,7 +13,7 @@ class District extends Model
     use HasFactory, Translatable;
 
     protected $guarded = [];
-    protected $hidden = ['translations'];
+    protected $hidden = ['translations', 'created_at', 'updated_at'];
     public $translatedAttributes = ['name'];
 
     public function country(): BelongsTo

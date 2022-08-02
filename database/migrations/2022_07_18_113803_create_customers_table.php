@@ -17,13 +17,15 @@ return new class extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->foreignId('country_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('city_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('district_id')->constrained()->cascadeOnDelete();
-            $table->string('email');
+            $table->foreignId('country_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('city_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('district_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->string('email')->unique();
             $table->string('phone')->unique();
             $table->string('cover')->nullable();
             $table->boolean('status')->default(true);
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

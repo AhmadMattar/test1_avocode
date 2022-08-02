@@ -65,5 +65,7 @@ return [
     'password' => 'Password',
 
     'Logout' => 'Logout',
+
+    'not_exist' => 'Not exist',
 ];
 

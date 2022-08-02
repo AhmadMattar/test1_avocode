@@ -64,5 +64,7 @@ return [
     'password' => 'كلمة السر',
 
     'Logout' => 'تسجيل خروج',
+
+    'not_exist' => 'لا يوجد',
 ];
 

@@ -27,6 +27,11 @@
                         <span class="text-danger error-text" id="email_error2"></span>
                     </div>
                     <div class="form-group">
+                        <label for="password">{{__('general.password')}}</label>
+                        <input type="text" name="password" value="{{old('password')}}" class="form-control">
+                        <span class="text-danger error-text" id="password_error2"></span>
+                    </div>
+                    <div class="form-group">
                         <Label for="phone">{{ __('general.phone') }}</Label>
                         <input type="text" name="phone" id="phone" class="form-control">
                         <span class="text-danger error-text" id="phone_error2"></span>

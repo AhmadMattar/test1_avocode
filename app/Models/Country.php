@@ -13,7 +13,7 @@ class Country extends Model implements TranslatableContract
     use HasFactory, Translatable;
 
     protected $guarded = [];
-    protected $hidden = ['translations'];
+    protected $hidden = ['translations', 'created_at', 'updated_at'];
     public $translatedAttributes = ['name'];
 
     public function cities(): HasMany

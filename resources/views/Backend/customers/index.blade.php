@@ -66,6 +66,7 @@
                             data.last_name = $('#searchLastName').val(),
                             data.country_id = $('#search_country_id').val(),
                             data.city_id = $('#search_city_id').val(),
+                            data.district_id = $('#search_district_id').val(),
                             data.email = $('#searchEmail').val(),
                             data.phone = $('#searchPhone').val(),
                             data.status = $('#searchStatus').val(),
@@ -308,11 +309,8 @@
                         $("#edit_city_id").append($('<option></option>').val('').html(
                             ' {{ __('general.select_city') }} '));
                         $.each(data, function(val, text) {
-                            let selectedVal = text.id == '{{ old('city_id') }}' ?
-                                "selected" : "";
-                            $("#edit_city_id").append($('<option ' + selectedVal +
-                                '></option>').val(text
-                                .id).html(text.name));
+                            let selectedVal = text.id == '{{ old('city_id') }}' ? "selected" : "";
+                            $("#edit_city_id").append($('<option ' + selectedVal +'></option>').val(text.id).html(text.name));
                         });
                     }, "json");
                 }
@@ -324,14 +322,10 @@
                         city_id: cityIdVal
                     }, function(data) {
                         $('option', $("#edit_district_id")).remove();
-                        $("#edit_district_id").append($('<option></option>').val('').html(
-                            ' {{ __('general.select_district') }} '));
+                        $("#edit_district_id").append($('<option></option>').val('').html(' {{ __('general.select_district') }} '));
                         $.each(data, function(val, text) {
-                            let selectedVal = text.id == '{{ old('district_id') }}' ?
-                                "selected" : "";
-                            $("#edit_district_id").append($('<option ' + selectedVal +
-                                '></option>').val(text
-                                .id).html(text.name));
+                            let selectedVal = text.id == '{{ old('district_id') }}' ? "selected" : "";
+                            $("#edit_district_id").append($('<option ' + selectedVal +'></option>').val(text.id).html(text.name));
                         });
                     }, "json");
                 }
