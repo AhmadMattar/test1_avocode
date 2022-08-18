@@ -29,6 +29,9 @@ $('#add').submit(function (e) {
         }
     });
 });
+$('#cancelAdd').on('click', function(){
+    $('#add')[0].reset();
+});
 
 // update record using ajax
 $('#edit').submit(function (e) {
@@ -61,6 +64,9 @@ $('#edit').submit(function (e) {
             }
         },
     });
+});
+$('#cancelEdit').on('click', function(){
+    $('#edit')[0].reset();
 });
 
 // delete record using ajax
@@ -224,17 +230,4 @@ $(document).on("change", "input[class='items_checkbox']", function () {
     if (selected.length === items.length) {
         $('#selectAll').prop('checked', true);
     }
-});
-
-// file input
-$(function () {
-    $("#Image").fileinput({
-        theme: "fas",
-        maxFileCount: 1,
-        allowedFileTypes: ['image'],
-        showCancel: true,
-        showRemove: false,
-        showUpload: false,
-        overwriteInitial: false
-    });
 });

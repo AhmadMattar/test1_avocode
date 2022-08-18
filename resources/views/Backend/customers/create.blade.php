@@ -80,6 +80,7 @@
                     </div>
                     <div class="form-group pt-4">
                         <button type="submit" name="submit" class="btn btn-primary">{{__('general.Add')}}</button>
+                        <button type="button" class="btn btn-danger" id="cancelAdd" data-bs-dismiss="modal">{{ __('general.Close') }}</button>
                     </div>
                 </form>
             </div>

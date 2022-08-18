@@ -17,6 +17,9 @@
 
     <link href="{{asset('Backend/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('Backend/assets/css/plugins.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{asset('Backend/plugins/file-upload/file-upload-with-preview.min.css')}}">
+    <link rel="stylesheet" href="{{asset('Backend/assets/css/users/account-setting.css')}}">
+    <link rel="stylesheet" href="{{asset('Backend/plugins/dropify/dropify.min.css')}}">
     <link rel="stylesheet" href="{{asset('Backend/vendor/bootstrap-input-file/css/fileinput.min.css')}}">
     <!-- END GLOBAL MANDATORY STYLES -->
     <link rel="stylesheet" href="{{asset('Backend/assets/css/toastr.min.css')}}">
@@ -157,6 +160,10 @@
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script src="{{asset('Backend/vendor/bootstrap-input-file/js/fileinput.min.js')}}"></script>
+    <script src="{{asset('backend/vendor/bootstrap-input-file/themes/fas/theme.min.js')}}"></script>
+    <script src="{{asset('Backend/plugins/file-upload/file-upload-with-preview.min.js')}}"></script>
+    <script src="{{asset('Backend/assets/js/users/account-settings.js')}}"></script>
+    <script src="{{asset('Backend/plugins/dropify/dropify.min.js')}}"></script>
     @yield('script')
 </body>
 </html>

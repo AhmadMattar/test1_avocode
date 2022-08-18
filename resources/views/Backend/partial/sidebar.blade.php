@@ -43,6 +43,87 @@
                     @endcanany
                 </ul>
 
+                @canany(['create_product', 'edit_product', 'delete_product', 'active_product', 'disactive_product', 'admin_permission'])
+                    <a href="#products_sidebar" data-active="true" data-toggle="collapse" aria-expanded="true"
+                        class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-home">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                            <span>{{ __('general.Products') }}</span>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-chevron-right">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                    </a>
+                    <ul class="collapse submenu list-unstyled show" id="products_sidebar" data-parent="#accordionExample">
+                        <li class="{{ request()->routeIs('products.index') ? 'active' : '' }}">
+                            <a href="{{ route('products.index') }}"> {{ __('general.Products') }} </a>
+                        </li>
+                    </ul>
+                @endcanany
+
+                @canany(['create_coupoun', 'edit_coupoun', 'delete_coupoun', 'active_coupoun', 'disactive_coupoun', 'admin_permission'])
+                    <a href="#coupouns_sidebar" data-active="true" data-toggle="collapse" aria-expanded="true"
+                        class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-home">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                            <span>{{ __('general.coupouns') }}</span>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-chevron-right">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                    </a>
+                    <ul class="collapse submenu list-unstyled show" id="coupouns_sidebar" data-parent="#accordionExample">
+                        <li class="{{ request()->routeIs('coupouns.index') ? 'active' : '' }}">
+                            <a href="{{ route('coupouns.index') }}"> {{ __('general.coupouns') }} </a>
+                        </li>
+                    </ul>
+                @endcanany
+
+                @canany(['delete_order', 'admin_permission'])
+                    <a href="#orders_sidebar" data-active="true" data-toggle="collapse" aria-expanded="true"
+                        class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-home">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                            <span>{{ __('general.orders') }}</span>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-chevron-right">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                    </a>
+                    <ul class="collapse submenu list-unstyled show" id="orders_sidebar" data-parent="#accordionExample">
+                        <li class="{{ request()->routeIs('orders.index') ? 'active' : '' }}">
+                            <a href="{{ route('orders.index') }}"> {{ __('general.orders') }} </a>
+                        </li>
+                    </ul>
+                @endcanany
+
                 @canany(['create_customer', 'edit_customer', 'delete_customer', 'active_customer', 'disactive_customer', 'admin_permission'])
                     <a href="#dashboard2" data-active="true" data-toggle="collapse" aria-expanded="true"
                         class="dropdown-toggle">
@@ -71,7 +152,7 @@
                 @endcanany
 
                 @can('admin_permission')
-                    {{-- <a href="#dashboard3" data-active="true" data-toggle="collapse" aria-expanded="true"
+                    <a href="#dashboard3" data-active="true" data-toggle="collapse" aria-expanded="true"
                         class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -80,7 +161,7 @@
                                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
                             </svg>
-                            <span>Roles</span>
+                            <span>{{__('general.roles')}}</span>
                         </div>
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -92,7 +173,7 @@
                     </a>
                     <ul class="collapse submenu list-unstyled show" id="dashboard3" data-parent="#accordionExample">
                         <li class="{{ request()->routeIs('roles.index') ? 'active' : '' }}">
-                            <a href="{{ route('roles.index') }}"> Roles </a>
+                            <a href="{{ route('roles.index') }}"> {{__('general.roles')}} </a>
                         </li>
                     </ul>
 
@@ -105,7 +186,7 @@
                                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
                             </svg>
-                            <span>Permission</span>
+                            <span>{{__('general.permission')}}</span>
                         </div>
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -117,9 +198,9 @@
                     </a>
                     <ul class="collapse submenu list-unstyled show" id="dashboard4" data-parent="#accordionExample">
                         <li class="{{ request()->routeIs('permissions.index') ? 'active' : '' }}">
-                            <a href="{{ route('permissions.index') }}"> Permission </a>
+                            <a href="{{ route('permissions.index') }}"> {{__('general.permission')}} </a>
                         </li>
-                    </ul> --}}
+                    </ul>
 
 
                     <a href="#dashboard5" data-active="true" data-toggle="collapse" aria-expanded="true"

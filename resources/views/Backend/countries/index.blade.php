@@ -109,6 +109,19 @@
                 $('#dataTable').DataTable().draw();
             });
         });
+
+        // file input
+        $(function() {
+            $("#Image").fileinput({
+                theme: "fas",
+                maxFileCount: 1,
+                allowedFileTypes: ['image'],
+                showCancel: true,
+                showRemove: false,
+                showUpload: false,
+                overwriteInitial: false
+            });
+        });
     </script>
     {{-- update country using ajax --}}
     <script>

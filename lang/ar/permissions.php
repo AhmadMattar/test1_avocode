@@ -24,4 +24,19 @@ return [
     'delete_customer'    =>  'حذف الزبون',
     'active_customer'    =>  'تفعيل الزبون',
     'disactive_customer' =>  'تعطيل الزبون',
+
+    'create_product'        =>  'إضافة منتج',
+    'edit_product'          =>  'تعديل منتج',
+    'delete_product'        =>  'حذف منتج',
+    'active_product'        =>  'تفعيل منتج',
+    'disactive_product'     =>  'تعطيل منتج',
+
+    'create_coupoun'        =>  'إضافة خصم',
+    'edit_coupoun'          =>  'تعديل خصم',
+    'delete_coupoun'        =>  'حذف خصم',
+    'active_coupoun'        =>  'تفعيل خصم',
+    'disactive_coupoun'     =>  'تعطيل خصم',
+
+    'show_order'    =>  'عرض الطلب',
+    'delete_order'  =>  'حذف الطلب',
 ];

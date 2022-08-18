@@ -109,7 +109,8 @@ class UserController extends Controller
         $data['name'] = $request->name;
         $data['email'] = $request->email;
         $data['status'] = $request->status;
-        if (request()->has('password')) {
+
+        if(trim($request->password) != ''){
             $data['password'] = bcrypt($request->password);
         }
         $user->update($data);
@@ -138,7 +139,7 @@ class UserController extends Controller
 
     public function deleteAll(Request $request)
     {
-        
+
         DB::table('model_has_permissions')->whereIn('model_id', $request->id)->delete();
         User::whereIn('id', $request->id)->delete();
 

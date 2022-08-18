@@ -34,16 +34,6 @@
 @stop
 @section('script')
     <script type="text/javascript" src="{{ asset('backend/vendor/selectPicker/js/picker.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $('#permission_id').picker({
-                search : true
-            });
-            $('#edit_permission_id').picker({
-                search : true
-            });
-        });
-    </script>
     {{-- Yajra dataTable config --}}
     <script>
         $(function() {

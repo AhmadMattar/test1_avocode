@@ -33,7 +33,7 @@
 @stop
 @section('script')
     <script type="text/javascript" src="{{ asset('backend/vendor/selectPicker/js/picker.js') }}"></script>
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('#role_id').picker({
                 search: true
@@ -42,7 +42,7 @@
                 search: true
             });
         });
-    </script>
+    </script> --}}
 
     {{-- Yajra dataTable config --}}
     <script>

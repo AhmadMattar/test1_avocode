@@ -23,17 +23,20 @@ return [
     'Add_city' => 'Add city',
     'Add_user' => 'Add supervisor',
     'Add_customer' => 'Add customer',
+    'Add_product' => 'Add product',
 
     'Edit_country' => 'Edit country',
     'Edit_city' => 'Edit city',
     'Edit_user' => 'Edit supervisor',
     'Edit_customer' => 'Edit customer',
     'Edit_district' => 'Edit district',
+    'Edit_product' => 'Edit product',
 
     'Delete'    => 'Delete',
     'Active'    => 'Active',
     'Disactive' => 'Disactive',
     'Close'     => 'Close',
+    'Cancel'    => 'Close',
 
     'Status'    => 'Status',
 
@@ -67,5 +70,44 @@ return [
     'Logout' => 'Logout',
 
     'not_exist' => 'Not exist',
+
+    'price'     => 'Price',
+    'images'    => 'Images',
+    'Products'  => 'Products',
+    'quantity'  => 'Quantity',
+
+    'coupouns'  => 'Coupouns',
+    'type'      => 'Type',
+    'value'     => 'Value',
+    'use_times' => 'Use times',
+
+    'fixed'         => 'Fixed',
+    'percentage'    => 'Percentage',
+    'total'         => 'Total',
+    'orders'        => 'Orders',
+    'order_details' => 'Order details',
+
+    'product_name'      => 'Product name',
+    'product_price'     => 'Product price',
+    'product_quantity'  => 'Product quantity',
+    'product_cover'     => 'Product cover',
+
+    'created_date'      => 'Created date',
+
+    'coupoun'       => 'Coupoun',
+    'coupoun_type'       => 'Coupoun type',
+    'coupoun_value'       => 'Coupoun value',
+    'roles'         => 'Roles',
+    'permission'    => 'Permission',
+
+    'select_roles'         => 'Select roles',
+    'select_permission'    => 'Select permission',
+
+    'add_role'     => 'Add role',
+    'edit_role'    => 'Edit role',
+
+    'add_permission'     => 'Add permission',
+    'edit_permission'    => 'Edit permission',
+
 ];
 

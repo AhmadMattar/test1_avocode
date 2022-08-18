@@ -24,4 +24,19 @@ return [
     'delete_customer'    =>  'delete customer',
     'active_customer'    =>  'active customer',
     'disactive_customer' =>  'disactive customer',
+
+    'create_product'        =>  'create product',
+    'edit_product'          =>  'edit product',
+    'delete_product'        =>  'delete product',
+    'active_product'        =>  'active product',
+    'disactive_product'     =>  'disactive product',
+
+    'create_coupoun'        =>  'create coupoun',
+    'edit_coupoun'          =>  'edit coupoun',
+    'delete_coupoun'        =>  'delete coupoun',
+    'active_coupoun'        =>  'active coupoun',
+    'disactive_coupoun'     =>  'disactive coupoun',
+
+    'show_order'    =>  'active order',
+    'delete_order'  =>  'disactive order',
 ];

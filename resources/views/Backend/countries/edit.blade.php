@@ -41,6 +41,7 @@
                     </div>
                     <div class="form-group pt-4">
                         <button type="submit" name="submit" class="btn btn-primary">{{__('general.Edit')}}</button>
+                        <button type="button" class="btn btn-danger" id="cancelEdit" data-bs-dismiss="modal">{{ __('general.Close') }}</button>
                     </div>
                 </form>
             </div>

@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Permission</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{{__('general.add_permission')}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -16,7 +16,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="role_id">Select Role</label>
+                        <label for="role_id">{{__('general.select_roles')}}</label>
                         <select name="role_id[]" id="role_id" class="form-control" multiple>
                             <option value="">---</option>
                             @foreach ($roles as $role)
@@ -28,6 +28,7 @@
 
                     <div class="form-group pt-4">
                         <button type="submit" name="submit" class="btn btn-primary">{{__('general.Add')}}</button>
+                        <button type="button" class="btn btn-danger" id="cancelAdd" data-bs-dismiss="modal">{{ __('general.Close') }}</button>
                     </div>
                 </form>
             </div>

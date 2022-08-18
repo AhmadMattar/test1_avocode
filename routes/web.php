@@ -10,7 +10,10 @@ use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\CountryController;
 use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\DistrictController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PermissionController;
+use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\ProductCoupounController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
@@ -67,6 +70,42 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::put('/disactiveAll', [DistrictController::class, 'disactiveAll'])->name('disativeAll');
                 Route::get('/index-table', [DistrictController::class, 'indexTable'])->name('indexTable');
                 Route::get('/cities/get-cities', [DistrictController::class, 'get_cities'])->name('get_cities');
+            });
+        });
+
+        Route::group(['middleware' => ['permission:admin_permission|create_product|edit_product|delete_product|active_product|disactive_product']], function () {
+            Route::prefix('products')->name('products.')->group(function () {
+                Route::get('/', [ProductController::class, 'index'])->name('index');
+                Route::post('/', [ProductController::class, 'store'])->name('store');
+                Route::put('/update', [ProductController::class, 'update'])->name('update');
+                Route::delete('/delete', [ProductController::class, 'destroy'])->name('destroy');
+                Route::delete('/delete-all', [ProductController::class, 'deleteAll'])->name('deleteAll');
+                Route::get('/index-table', [ProductController::class, 'indexTable'])->name('indexTable');
+            });
+        });
+
+        Route::group(['middleware' => ['permission:admin_permission|create_coupoun|edit_coupoun|delete_coupoun|active_coupoun|disactive_coupoun']], function () {
+            Route::prefix('coupouns')->name('coupouns.')->group(function () {
+                Route::get('/', [ProductCoupounController::class, 'index'])->name('index');
+                Route::post('/', [ProductCoupounController::class, 'store'])->name('store');
+                Route::put('/update', [ProductCoupounController::class, 'update'])->name('update');
+                Route::delete('/delete', [ProductCoupounController::class, 'destroy'])->name('destroy');
+                Route::delete('/delete-all', [ProductCoupounController::class, 'deleteAll'])->name('deleteAll');
+                Route::put('/activeAll', [ProductCoupounController::class, 'activeAll'])->name('ativeAll');
+                Route::put('/disactiveAll', [ProductCoupounController::class, 'disactiveAll'])->name('disativeAll');
+                Route::get('/index-table', [ProductCoupounController::class, 'indexTable'])->name('indexTable');
+            });
+        });
+        Route::group(['middleware' => ['permission:admin_permission|delete_order|show_order']], function () {
+            Route::prefix('orders')->name('orders.')->group(function () {
+                Route::get('/', [OrderController::class, 'index'])->name('index');
+                Route::post('/', [OrderController::class, 'store'])->name('store');
+                Route::put('/update', [OrderController::class, 'update'])->name('update');
+                Route::delete('/delete', [OrderController::class, 'destroy'])->name('destroy');
+                Route::delete('/delete-all', [OrderController::class, 'deleteAll'])->name('deleteAll');
+                Route::put('/activeAll', [OrderController::class, 'activeAll'])->name('ativeAll');
+                Route::put('/disactiveAll', [OrderController::class, 'disactiveAll'])->name('disativeAll');
+                Route::get('/index-table', [OrderController::class, 'indexTable'])->name('indexTable');
             });
         });
 
