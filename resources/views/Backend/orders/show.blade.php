@@ -29,6 +29,10 @@
                                     <td id="coupoun_value"></td>
                                 </tr>
                                 <tr>
+                                    <th>{{__('general.payment_status')}}</th>
+                                    <td id="payment_status"></td>
+                                </tr>
+                                <tr>
                                     <th>{{__('general.created_date')}}</th>
                                     <td colspan="3" id="created_at"></td>
                                 </tr>

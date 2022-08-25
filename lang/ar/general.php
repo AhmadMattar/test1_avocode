@@ -110,5 +110,14 @@ return [
 
     'add_permission'     => 'إضافة صلاحية',
     'edit_permission'    => 'تعديل صلاحية',
+
+    'pay'       => 'دفع',
+    'select_payment_gateway'    => 'اختر وسيلة الدفع',
+    'payed_success'     => 'تمت عملية الدفع بنجاح',
+    'payed_fail'     => 'فشلت عملية الدفع',
+
+    'complete'      => 'مكتمل',
+    'not_complete'  => 'غير مكتمل',
+    'payment_status'    => 'حالة الدفع',
 ];
 

@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProductCoupounController;
+use App\Http\Controllers\PaymentProviderController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
@@ -28,6 +29,9 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 */
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
+    Route::get('showForm', [PaymentProviderController::class, 'showForm'])->name('showForm');
+    Route::get('getCheckout', [PaymentProviderController::class, 'getCartCheckout'])->name('getCheckout');
+    Route::get('updatePaymentStatus/{token}', [OrderController::class, 'updatePaymentStatus'])->name('updatePaymentStatus');
 
     Route::middleware('auth')->group(function () {
         Route::get('/index', function () {
@@ -159,8 +163,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         });
     });
 });
-
-
 
 
 Route::get('/', function () {

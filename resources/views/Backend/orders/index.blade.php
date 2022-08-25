@@ -13,11 +13,8 @@
             </button>
         @endcanany
 
-        {{-- @include('Backend.orders.create') --}}
-        {{-- @include('Backend.orders.edit') --}}
         @include('Backend.orders.show')
     </div>
-    {{-- @include('Backend.orders.filter.filter') --}}
     <div class="table-responsive">
         <table class="table table-bordered table-hover table-striped mb-4" id="dataTable">
             <thead>
@@ -30,6 +27,7 @@
                     <th>{{ __('general.coupoun') }}</th>
                     <th>{{ __('general.type') }}</th>
                     <th>{{ __('general.value') }}</th>
+                    <th>{{ __('general.payment_status') }}</th>
                     <th>{{ __('general.Action') }}</th>
                 </tr>
             </thead>
@@ -90,6 +88,12 @@
                         searchable: true,
                     },
                     {
+                        data: 'payment_status',
+                        name: 'payment_status',
+                        orderable: false,
+                        searchable: true,
+                    },
+                    {
                         data: 'action',
                         name: 'action',
                         orderable: false,
@@ -140,6 +144,7 @@
                 var coupoun_code = $(this).data("coupoun_code");
                 var coupoun_type = $(this).data("coupoun_type");
                 var coupoun_value = $(this).data("coupoun_value");
+                var payment_status = $(this).data("payment_status");
                 var total = $(this).data("total");
 
                 $('#customer_name').text(customer_name);
@@ -147,6 +152,13 @@
                 $('#coupoun_code').text(coupoun_code);
                 $('#coupoun_type').text(coupoun_type);
                 $('#coupoun_value').text(coupoun_value);
+                if(payment_status != ""){
+                    $('#payment_status').attr('class', 'text-success');
+                    $('#payment_status').text("{{__('general.complete')}}");
+                }else{
+                    $('#payment_status').attr('class', 'text-danger');
+                    $('#payment_status').text("{{__('general.not_complete')}}");
+                }
                 $('#total').text(total);
 
                 let productNames = [];

@@ -178,8 +178,8 @@ class CustomerController extends Controller
         $data['district_id'] = $request->district_id;
         $data['status'] = $request->status;
 
-        if (request()->has('password')) {
-            $data['password'] = Hash::make($request->password);
+        if(trim($request->password) != ''){
+            $data['password'] = bcrypt($request->password);
         }
 
         if($request->file('cover'))

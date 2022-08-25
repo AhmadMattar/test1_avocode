@@ -194,6 +194,7 @@ class ProductController extends Controller
     public function checkout(Request $request)
     {
         // return $request->all();
+        $token = $this->creatOrderToken();
         $rules = [
             'coupoun' => 'nullable|exists:product_coupouns,code',
         ];
@@ -211,15 +212,17 @@ class ProductController extends Controller
         {
             return $this->mainResponse(false, 'Yours cart is empty', null, ['cart' => 'Yours cart is empty'], 422);
         }
-        
-        $user = Customer::query()->find(auth()->user()->id);
 
+        $user = Customer::query()->find(auth()->user()->id);
+        $paymentRoute = route('showForm', ['token' => $token]);
         $order = Order::create([
-            'customer_id'   => auth()->user()->id,
-            'total'         => $user->carts->sum('price'),
+            'customer_id'           => auth()->user()->id,
+            'total'                 => $user->carts->sum('price'),
+            'payment_status'        => null,
+            'order_token'           => $token,
         ]);
 
-        if($request->has('coupoun'))
+        if(trim($request->coupoun) != "")
         {
             $coupoun = ProductCoupoun::query()->whereCode($request->coupoun)->first();
             if($coupoun->type == 'fixed')
@@ -245,6 +248,12 @@ class ProductController extends Controller
                     'coupoun_value' => $coupoun->value,
                 ]);
             }
+        }else{
+            $order->update([
+                'product_coupoun_id' => null,
+                'coupoun_type' => null,
+                'coupoun_value' => 0,
+            ]);
         }
 
         foreach ($user->carts as $cart) {
@@ -261,6 +270,7 @@ class ProductController extends Controller
 
         $data = $order;
         $data['products'] = $order->products;
+        $data['payment_url'] = $paymentRoute;
         return $this->mainResponse(true, 'success', $data);
     }
 
@@ -272,5 +282,17 @@ class ProductController extends Controller
             $errors[] = ['filed_name' => $key, 'message' => $value];
         }
         return response()->json(compact('code', 'status', 'message', 'data', 'errors'), $code);
+    }
+
+    private function creatOrderToken()
+    {
+        $token = '';
+        $str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
+        for($i = 0; $i < 25; $i++)
+        {
+            $token .= rand(0, 9) . $str[rand(0, 51)];
+        }
+        return $token;
     }
 }

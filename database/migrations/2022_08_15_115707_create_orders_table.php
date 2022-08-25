@@ -20,6 +20,8 @@ return new class extends Migration
             $table->foreignId('product_coupoun_id')->nullable()->constrained()->nullOnDelete();
             $table->string('coupoun_type')->nullable();
             $table->unsignedBigInteger('coupoun_value')->nullable();
+            $table->string('payment_status')->nullable();
+            $table->string('order_token')->unique();
             $table->timestamps();
         });
     }

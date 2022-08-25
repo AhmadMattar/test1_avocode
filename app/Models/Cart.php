@@ -15,6 +15,7 @@ class Cart extends Model
     protected $hidden = ['created_at', 'updated_at'];
     protected $casts = [
         'quantity' => 'integer',
+        'product_id' => 'integer',
     ];
 
     public function user(): BelongsTo

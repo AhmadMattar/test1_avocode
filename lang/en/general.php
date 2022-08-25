@@ -109,5 +109,14 @@ return [
     'add_permission'     => 'Add permission',
     'edit_permission'    => 'Edit permission',
 
+    'pay'       => 'Pay',
+    'select_payment_gateway'    => 'Select payment method',
+    'payed_success'     => 'Payed successfully',
+    'payed_fail'     => 'Payed failed',
+
+    'complete'  => 'Complote',
+    'not_complete'  => 'Not Complote',
+    'payment_status'    => 'Payment status',
+
 ];
 
